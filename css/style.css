@@ -18,6 +18,7 @@ body {
 	font-family: sans-serif;
 	font-size: 14px;
 	padding-left:10px;
+	padding-right:10px;
 }
 
 a , a:visited {
@@ -115,3 +116,21 @@ h4 {
 	border : solid 2px #FF9F9F;
 	font-weight: bold;
 }
+
+table, tr, td {
+	border : solid 1px #e0e0e0;
+}
+
+tr, td {
+	padding:5px;
+	padding:5px;
+}
+
+.col01 {
+	width:25%;
+}
+
+.col02 {
+	width:75%;
+}
+
