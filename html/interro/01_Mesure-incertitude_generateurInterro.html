@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/style.css">
+
+        <title>générateur exercice - mesure et incertitude</title>
+
+	
+		<style>
+			body {
+				background-color:#FFFFFF;
+				color:#000000;
+				font-size : 20px;
+				font-family :sans-serif;
+			}
+			table {
+				margin-top: 10px;
+				border : solid 1px black;
+				border-spacing: 0;
+			}
+			
+			td {
+				border : solid 1px black;
+				width:300px;
+				height:50px;
+				text-align:center;
+				border-spacing: 0;
+			}
+			
+			tr {
+				border-spacing: 0;
+			}
+
+			cache {
+				display:none;
+			}
+
+			#affiche {
+				margin:25px 0px 25px 0px;
+			}
+			
+			.identite {
+				display:flex;
+				width:100%
+				border-bottom : solid 1px black;
+				margin-top : 15px;
+			}
+			
+			.identite div {
+				width:50%;
+			}
+			
+			.nbSujet {
+				text-align: center;
+				margin-top:20px;
+				padding-bottom:20px;
+				border-bottom : solid 1px black;
+			}
+					
+			.espace{
+			width:10px;
+			height:500px;
+			}
+			
+			.tabreponse td {
+				width:150px;
+				height:25px;			
+			}
+			
+			.tabreponse {
+				break-after: page;
+			}
+
+			.reponse {
+				break-before: page;
+				border-bottom : solid 1px black;
+			}
+			
+			hr {
+			margin-bottom:15px;
+			}
+			
+			
+			.big {
+				font-size: 1em;
+			}			
+			
+			sub, sup {
+				font-size : 0.5em;
+			}			
+			
+			@media print {
+				background-color:#FFFFFF;
+			}
+			
+			@media file {
+				background-color:#FFFFFF;
+			}
+		</style>
+		
+    </head>
+    <body>		
+		<header>
+		</header>
+		<main id="sujet">
+		</main>
+		<footer>
+		</footer>
+		
+		<script>
+		
+			let nbEleves = 15;
+			let nomInterro = "mesure et incertitude";
+			
+			tabDelta = [ //delta1, delta2, delta3, s
+			[0,0.5,1.5,1],
+			[0,0.9,1.3,1],
+			[0,1,3,2],
+			[0,1.8,2.6,2],
+			[0,1.5,4.5,3],
+			[0,2.7,3.9,3],
+			[0,2,6,4],
+			[0,3.6,5.2,4],
+			[0,0.3,7.9,5],
+			[0,2.5,7.5,5],
+			[0,4.5,6.5,5],
+			[0.1,3.2,3.5,3],
+			[0.1,2,4.3,3],
+			[0.1,2,4.3,5],
+			[0.1,3.2,3.5,5],
+			[0.3,0.4,1.5,1],
+			[0.4,0.5,4.7,3],
+			[0.5,0.9,1.2,1],
+			[0.5,1.7,4.4,3],
+			[0.5,2.5,4,3],
+			[0.6,0.8,3,2],
+			[0.6,0.8,3,2],
+			[0.7,2.4,7.5,5],
+			[0.7,5.1,6,5],
+			[0.8,3.1,3.5,3],
+			[0.9,1.2,4.5,3],
+			[1,1.8,2.4,2],
+			[1.1,2.3,4,3],
+			[1.2,1.6,6,4],
+			[1.3,2,4.1,3],
+			[1.5,2.7,3.6,3],
+			[1.5,2,7.5,5],
+			[1.5,2.9,7.2,5],
+			[1.5,4.8,6.1,5],
+			[1.6,2.5,3.7,3],
+			[1.6,4.5,6.3,5],
+			[1.7,0.5,4.4,3],
+			[1.7,1.9,4,3],
+			[2,2.5,3.5,3],
+			[2,3.6,4.8,4],
+			[2,3.3,6.9,5],
+			[2,5.1,5.7,5],
+			[2.1,2.5,7.2,5],
+			[2.1,4.7,6,5],
+			[2.5,2.8,2.9,3],
+			[2.5,4.5,6,5],
+			[2.7,3.6,6.5,5],
+			[3.3,4.5,5.6,5],
+			[3.9,4.5,5.2,5]
+			];
+
+
+			
+	
+			
+			for(let i=0;i<=nbEleves;i++)
+			{
+
+			moyenne = Math.floor(Math.random()*10)+25;
+	//		indice = Math.floor(Math.random()*tabDelta.length);
+			indice = i;
+			m1 = moyenne - tabDelta[indice][0];
+			m2 = moyenne + tabDelta[indice][0];
+			m3 = moyenne - tabDelta[indice][1];
+			m4 = moyenne + tabDelta[indice][1];
+			m5 = moyenne - tabDelta[indice][2];
+			m6 = moyenne + tabDelta[indice][2];
+			
+			tabMesure=[m1,m2,m3,m4,m5,m6];
+			tabMesureOrdo=tabMesure.toSorted();
+			
+			s=tabDelta[indice][3]	
+			
+				sujet = document.getElementById("sujet");
+
+				reponse = document.createElement("div");
+				reponse.setAttribute("class","reponse");
+				reponse.innerHTML = "BTS TP 1 - "+nomInterro+" - Correction numéro "+i+"<br><br>" +
+			"On vous donne les mesures suivantes : "+tabMesureOrdo.toString().replaceAll(","," / ")+" (0.5 point par bonne réponse)<br>"+
+			"1/ minimum : "+tabMesureOrdo[0]+" <br>2/ maximum : "+tabMesureOrdo[tabMesureOrdo.length-1]+" <br>3/ Q1 : "+tabMesureOrdo[1]+" <br>4/ Q3 "+tabMesureOrdo[4]+" <br>5/ la valeur moyenne : "+moyenne+" <br>6/ L'écart-type expérimental : "+s+
+				"<br><br>";                                                                                                                                                                    
+	
+				//"<p >Pour la conversion hexa vers binaire ( et réciproquement ) on utilise le tableau<br>"+
+				//"Pour la conversion du décimal vers une autre base, on utilise les divisions successives ( de 2 pour le binaire et de 16 pour l'hexa )<br>"+
+				//"Pour la conversion du binaire vers le décimal, on utilise les puissances de 2 ( ou les puissances de 16 pour l'hexa )</p>";		
+				sujet.appendChild(reponse);
+				
+				divId=document.createElement("div");
+				divId.setAttribute("class","identite");
+			
+				divNom=document.createElement("div");
+				divNom.innerHTML="<br>Nom : "
+			
+				divPrenom=document.createElement("div");
+				divPrenom.innerHTML="<br>Prénom : ";
+
+				divId.appendChild(divNom);
+				divId.appendChild(divPrenom);
+				
+				sujet.appendChild(divId);
+				
+				
+				divSujet = document.createElement("div");
+				divSujet.setAttribute("class","nbSujet");
+				divSujet.innerHTML = "BTS TP 1 - "+nomInterro+" - Sujet numéro "+i;
+				
+				sujet.appendChild(divSujet);
+			
+				enonce=document.createElement("div");
+			enonce.innerHTML= "<br>"+
+				"On vous donne les mesures suivantes : "+tabMesure.toString().replaceAll(","," / ")+"<br>"+
+				"En utilisant votre calculatrice, donnez les valeurs suivantes : (0.5 point par bonne réponse)<br>"+
+				"1/ minimum : <br><br>2/ maximum : <br><br>3/ Q1 : <br><br>4/ Q3 <br><br>5/ la valeur moyenne : <br><br>6/ L'écart-type expérimental : <br><br>"+
+				"";
+				
+				sujet.appendChild(enonce);
+				
+//				espace=document.createElement("div");
+//				espace.setAttribute("class","espace");
+//				sujet.appendChild(espace);
+
+
+			
+			}
+			
+		</script>
+		
+	</body>
+</html>
