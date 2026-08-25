@@ -193,7 +193,7 @@
 				reponse = document.createElement("div");
 				reponse.setAttribute("class","reponse");
 				reponse.innerHTML = "BTS TP 1 - "+nomInterro+" - Correction numéro "+i+"<br><br>" +
-			"On vous donne les mesures suivantes : "+tabMesureOrdo.toString().replaceAll(","," / ")+" (0.5 point par bonne réponse)<br>"+
+			"Les mesures triées en ordre croissant : "+tabMesureOrdo.toString().replaceAll(","," / ").replaceAll("."," , ")+" (0,5 point par bonne réponse)<br>"+
 			"1/ minimum : "+tabMesureOrdo[0]+" <br>2/ maximum : "+tabMesureOrdo[tabMesureOrdo.length-1]+" <br>3/ Q1 : "+tabMesureOrdo[1]+" <br>4/ Q3 "+tabMesureOrdo[4]+" <br>5/ la valeur moyenne : "+moyenne+" <br>6/ L'écart-type expérimental : "+s+
 				"<br><br>";                                                                                                                                                                    
 	
@@ -225,7 +225,7 @@
 			
 				enonce=document.createElement("div");
 			enonce.innerHTML= "<br>"+
-				"On vous donne les mesures suivantes : "+tabMesure.toString().replaceAll(","," / ")+"<br>"+
+				"On vous donne les mesures suivantes : "+tabMesure.toString().replaceAll(","," / ").replaceAll(".",",")+"<br>"+
 				"En utilisant votre calculatrice, donnez les valeurs suivantes : (0.5 point par bonne réponse)<br>"+
 				"1/ minimum : <br><br>2/ maximum : <br><br>3/ Q1 : <br><br>4/ Q3 <br><br>5/ la valeur moyenne : <br><br>6/ L'écart-type expérimental : <br><br>"+
 				"";

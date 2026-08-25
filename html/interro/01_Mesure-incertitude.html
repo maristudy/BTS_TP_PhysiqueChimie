@@ -145,20 +145,18 @@
 			s=tabDelta[indice][3]		
 			
 			enonce = document.getElementsByClassName("enonce")[0];
-			enonce.innerHTML= "On vous donne les mesures suivantes : "+tabMesure.toString().replaceAll(","," / ")+"<br>"+
-				"En utilisant votre calculatrice, donnez les valeurs suivantes : (0.5 point par bonne réponse)<br>"+
+			enonce.innerHTML= "On vous donne les mesures suivantes : "+tabMesure.toString().replaceAll(","," / ").replaceAll(".",",")+"<br>"+
+				"En utilisant votre calculatrice, donnez les valeurs suivantes : (0,5 point par bonne réponse)<br>"+
 				"1/ minimum : <br><br>2/ maximum : <br><br>3/ Q1 : <br><br>4/ Q3 <br><br>5/ la valeur moyenne : <br><br>6/ L'écart-type expérimental : <br><br>"+
 				"";
 		<!-- <sub> pour indice <sup> pour exposant &infin; symbole infini ; &Delta symbol delta;-->
 		<!-- https://www.w3schools.com/html/html_symbols.asp -->
 		
 			reponse = document.getElementById("reponse");
-			reponse.innerHTML= "On vous donne les mesures suivantes : "+tabMesureOrdo.toString().replaceAll(","," / ")+"<br>"+
+			reponse.innerHTML= "Les mesures triées en ordre croissant : "+tabMesureOrdo.toString().replaceAll(","," / ").replaceAll(".",",")+"<br>"+
 			"1/ minimum : "+tabMesureOrdo[0]+" <br>2/ maximum : "+tabMesureOrdo[tabMesureOrdo.length-1]+" <br>3/ Q1 : "+tabMesureOrdo[1]+" <br>4/ Q3 "+tabMesureOrdo[4]+" <br>5/ la valeur moyenne : "+moyenne+" <br>6/ L'écart-type expérimental : "+s+
 				"";                                                                                                                                                                    
-				console.log(tabMesureOrdo.toString().replaceAll(","," / "))
-
-		
+	
 
 			affiche=document.getElementById("affiche");
 			affiche.addEventListener("click",() => {
