@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/style.css">
+
+        <title>générateur exercice - Erreur : type et origine</title>
+
+	
+		<style>
+			body {
+				background-color:#FFFFFF;
+				color:#000000;
+				font-size : 15px;
+				font-family :sans-serif;
+			}
+			table {
+				margin-top: 10px;
+				border : solid 1px black;
+				border-spacing: 0;
+			}
+			
+			td {
+				border : solid 1px black;
+				width:300px;
+				height:50px;
+				text-align:center;
+				border-spacing: 0;
+			}
+			
+			tr {
+				border-spacing: 0;
+			}
+
+			cache {
+				display:none;
+			}
+
+			#affiche {
+				margin:25px 0px 25px 0px;
+			}
+			
+			.identite {
+				display:flex;
+				width:100%
+				border-bottom : solid 1px black;
+				margin-top : 15px;
+			}
+			
+			.identite div {
+				width:50%;
+			}
+			
+			.nbSujet {
+				text-align: center;
+				margin-top:20px;
+				padding-bottom:20px;
+				border-bottom : solid 1px black;
+			}
+					
+			.espace{
+			width:10px;
+			height:500px;
+			}
+			
+			.tabreponse td {
+				width:150px;
+				height:25px;			
+			}
+			
+			.tabreponse {
+				break-after: page;
+			}
+
+			.reponse {
+				break-before: page;
+				border-bottom : solid 1px black;
+			}
+			
+			hr {
+			margin-bottom:15px;
+			}
+			
+			
+			.big {
+				font-size: 1em;
+			}			
+			
+			sub, sup {
+				font-size : 0.5em;
+			}			
+			
+			@media print {
+				background-color:#FFFFFF;
+			}
+			
+			@media file {
+				background-color:#FFFFFF;
+			}
+		</style>
+		
+    </head>
+    <body>		
+		<header>
+		</header>
+		<main id="sujet">
+		</main>
+		<footer>
+		</footer>
+		
+		<script>
+		
+			let nbEleves = 15;
+			let nomInterro = "Erreur : type et origine";
+			
+			tabTypeErreur = [ //type, descriptif, exemple
+			["Erreurs liées aux instruments","Des instuments avec des caractéristiques identiques vont donner des résultats différents","Problème de calibrage/tare<br>instrument defectueux<br>instrument pas assez précis"],
+			["Erreurs liées aux conditions de réalisation de l'expérience","Une même expérience réalisée plusieurs fois donnera des résultats différents si la température et/ou la pression changent","Résultats différents en été ou en hiver<br>Résultats différents si le labo est en bord de mer ou en altitude<br>Résultats différents si à l'extérieur on a un anticyclone ou une tempête"],
+			["Erreurs de lecture","Pour lire le résutat d'une mesure, il faut respecter certaines règles (les yeux en face du bas du ménisque,...)","L'aiguille est entre deux graduations (manque de précision)<br>Etre mal positionné pour lire une mesure"]
+			];
+
+			tabExemplesErreurs = [ //exemple, réponse attendue
+			["L'eau bout à 100°C à Saint-Brieuc et à 70°C au sommet de l'Everest (8 848 m d'altitude)","La pression est différente"],
+			["Vous réalisez une même expérience un jour de soleil et lors d'une tempête. Vous obtenez des résultats différents","La pression est différente"],
+			["Vous réalisez une même expérience un jour d'hiver (le chauffage est en panne, il faut 5 °C dans le labo) et un jour d'été (la climatisation est en panne, il fait 40 °C dans le labo). Vous obtenez des résultats différents","La température est différente"],			
+
+			["Un liquide se trouve dans une éprouvette graduée. Vous lisez un volume de 23 mL, votre binôme lit un volume de 27 mL","C'est une erreur de lecture"],
+			["Vous mesurez une hauteur avec un mètre. Vous lisez 16 mm et votre binôme 18 mm","C'est une erreur de lecture"],
+			["Vous mesurez une tension avec un voltmètre analogique. L'aiguille est entre deux graduations.","L'instrument n'est pas assez précis"],			
+
+			["Vous mesurez le pH de l'eau du robinet avec un ph-mètre. L'instrument indique un pH de 5","C'est un problème de calibrage/tare"],			
+			["Vous pesez un objet avec une première balance mécanique. Elle indique une masse de 500 gr. Une autre balance mécanique vous indique 420 gr","C'est un problème de calibrage/tare"],
+			["Vous pesez un objet avec une balance électronique. Elle affiche 500 g, quelques secondes après elle affiche 685 g, quelques seconde après 438 g.","L'instrument est défectueux"]
+			];			
+			
+			
+	tabTotalType = "<table style=\"border : 1px solid black\">";
+	for(j=0;j<tabTypeErreur.length;j++)
+	{
+		tabTotalType = tabTotalType+ "<tr><td>"+tabTypeErreur[j][0]+"</td><td>"+tabTypeErreur[j][1]+"</td><td>"+tabTypeErreur[j][2]+"</td></tr>";
+	}
+	tabTotalType = tabTotalType+ "</table>";
+		
+	body=document.getElementById("sujet");
+	tab=document.createElement("p");
+	tab.innerHTML=tabTotalType;
+	body.appendChild(tab);
+			
+			
+			
+			for(let i=0;i<=nbEleves;i++)
+			{
+
+			indiceType1 = Math.floor(Math.random()*3);
+			indiceType2 = Math.floor(Math.random()*3);
+			
+			while(indiceType1 == indiceType2)
+			{
+				indiceType2 = Math.floor(Math.random()*3);
+			}
+			
+			indiceType3 = Math.floor(Math.random()*3);
+			while(indiceType1 == indiceType3 || indiceType2 == indiceType3)
+			{
+				indiceType3 = Math.floor(Math.random()*3);
+			}
+			
+			indiceExemple1 = Math.floor(Math.random()*3)+0;
+			indiceExemple2 = Math.floor(Math.random()*3)+3;			
+			indiceExemple3 = Math.floor(Math.random()*3)+6;	
+
+			ordre = Math.floor(Math.random()*6);
+			questionExemple = "";
+			reponseExemple = "";
+			
+			switch(ordre)
+			{
+			
+			case 0 :
+			questionExemple = "2/ "+tabExemplesErreurs[indiceExemple1][0]+"<br><br>"+"<br>3/ "+tabExemplesErreurs[indiceExemple2][0]+"<br><br>"+"<br>4/ "+tabExemplesErreurs[indiceExemple3][0];
+			reponseExemple = "2/ "+tabExemplesErreurs[indiceExemple1][0]+"<br>"+tabExemplesErreurs[indiceExemple1][1]+
+							"<br>3/ "+tabExemplesErreurs[indiceExemple2][0]+"<br>"+tabExemplesErreurs[indiceExemple2][1]+
+							"<br>4/ "+tabExemplesErreurs[indiceExemple3][0]+"<br>"+tabExemplesErreurs[indiceExemple3][1];
+			break;
+			
+			case 1 :
+			questionExemple = "2/ "+tabExemplesErreurs[indiceExemple1][0]+"<br><br>"+"<br>3/ "+tabExemplesErreurs[indiceExemple3][0]+"<br><br>"+"<br>4/ "+tabExemplesErreurs[indiceExemple2][0];
+			reponseExemple = "2/ "+tabExemplesErreurs[indiceExemple1][0]+"<br>"+tabExemplesErreurs[indiceExemple1][1]+
+							"<br>3/ "+tabExemplesErreurs[indiceExemple3][0]+"<br>"+tabExemplesErreurs[indiceExemple3][1]+
+							"<br>4/ "+tabExemplesErreurs[indiceExemple2][0]+"<br>"+tabExemplesErreurs[indiceExemple2][1];			
+			break;
+
+			case 2 :
+			questionExemple = "2/ "+tabExemplesErreurs[indiceExemple2][0]+"<br><br>"+"<br>3/ "+tabExemplesErreurs[indiceExemple1][0]+"<br><br>"+"<br>4/ "+tabExemplesErreurs[indiceExemple3][0];
+			reponseExemple = "2/ "+tabExemplesErreurs[indiceExemple2][0]+"<br>"+tabExemplesErreurs[indiceExemple2][1]+
+							"<br>3/ "+tabExemplesErreurs[indiceExemple1][0]+"<br>"+tabExemplesErreurs[indiceExemple1][1]+
+							"<br>4/ "+tabExemplesErreurs[indiceExemple3][0]+"<br>"+tabExemplesErreurs[indiceExemple3][1];			
+			break;
+
+			case 3 :
+			questionExemple = "2/ "+tabExemplesErreurs[indiceExemple2][0]+"<br><br>"+"<br>3/ "+tabExemplesErreurs[indiceExemple3][0]+"<br><br>"+"<br>4/ "+tabExemplesErreurs[indiceExemple1][0];
+			reponseExemple = "2/ "+tabExemplesErreurs[indiceExemple2][0]+"<br>"+tabExemplesErreurs[indiceExemple2][1]+
+							"<br>3/ "+tabExemplesErreurs[indiceExemple3][0]+"<br>"+tabExemplesErreurs[indiceExemple3][1]+
+							"<br>4/ "+tabExemplesErreurs[indiceExemple1][0]+"<br>"+tabExemplesErreurs[indiceExemple1][1];				
+			break;
+
+			case 4 :
+			questionExemple = "2/ "+tabExemplesErreurs[indiceExemple3][0]+"<br><br>"+"<br>3/ "+tabExemplesErreurs[indiceExemple2][0]+"<br><br>"+"<br>4/ "+tabExemplesErreurs[indiceExemple1][0];
+			reponseExemple = "2/ "+tabExemplesErreurs[indiceExemple3][0]+"<br>"+tabExemplesErreurs[indiceExemple3][1]+
+							"<br>3/ "+tabExemplesErreurs[indiceExemple2][0]+"<br>"+tabExemplesErreurs[indiceExemple2][1]+
+							"<br>4/ "+tabExemplesErreurs[indiceExemple1][0]+"<br>"+tabExemplesErreurs[indiceExemple1][1];				
+			break;
+
+			case 5 :
+			questionExemple = "2/ "+tabExemplesErreurs[indiceExemple3][0]+"<br><br>"+"<br>3/ "+tabExemplesErreurs[indiceExemple1][0]+"<br><br>"+"<br>4/ "+tabExemplesErreurs[indiceExemple2][0];
+			reponseExemple = "2/ "+tabExemplesErreurs[indiceExemple3][0]+"<br>"+tabExemplesErreurs[indiceExemple3][1]+
+							"<br>3/ "+tabExemplesErreurs[indiceExemple1][0]+"<br>"+tabExemplesErreurs[indiceExemple1][1]+
+							"<br>4/ "+tabExemplesErreurs[indiceExemple2][0]+"<br>"+tabExemplesErreurs[indiceExemple2][1];				
+			break;
+			
+			}
+			
+			enonce = document.getElementsByClassName("enonce")[0];
+		
+			reponse = document.getElementById("reponse");
+                                                                                                                                        
+			
+				sujet = document.getElementById("sujet");
+
+				reponse = document.createElement("div");
+				reponse.setAttribute("class","reponse");
+//				reponse.setAttribute("style","break-after: page;");
+				reponse.innerHTML = "BTS TP 1 - "+nomInterro+" - Correction numéro "+i+"<br>" +
+/*				"(0,5 point par bonne réponse)<br>1/ Compléter le tableau suivant : "+
+				"<table style=\"border: 1px solid white;width:90%;\">"+
+				"<tr><td width=\"20%\">type erreur</td><td width=\"55%\">description/explication</td><td width=\"20%\">exemple</td></tr>"+
+				"<tr><td>"+tabTypeErreur[indiceType1][0]+"</td><td>"+tabTypeErreur[indiceType1][1]+"</td><td>"+tabTypeErreur[indiceType1][2]+"</td></tr>"+
+				"<tr><td>"+tabTypeErreur[indiceType2][0]+"</td><td>"+tabTypeErreur[indiceType2][1]+"</td><td>"+tabTypeErreur[indiceType2][2]+"</td></tr>"+
+				"<tr><td>"+tabTypeErreur[indiceType3][0]+"</td><td>"+tabTypeErreur[indiceType3][1]+"</td><td>"+tabTypeErreur[indiceType3][2]+"</td></tr>"+				
+				"</table>"+
+*/				reponseExemple+
+				 "<br><br>";                                                                                                                                                                    
+	
+				//"<p >Pour la conversion hexa vers binaire ( et réciproquement ) on utilise le tableau<br>"+
+				//"Pour la conversion du décimal vers une autre base, on utilise les divisions successives ( de 2 pour le binaire et de 16 pour l'hexa )<br>"+
+				//"Pour la conversion du binaire vers le décimal, on utilise les puissances de 2 ( ou les puissances de 16 pour l'hexa )</p>";		
+				sujet.appendChild(reponse);
+				
+				divId=document.createElement("div");
+				divId.setAttribute("class","identite");
+			
+				divNom=document.createElement("div");
+				divNom.innerHTML="<br>Nom : "
+			
+				divPrenom=document.createElement("div");
+				divPrenom.innerHTML="<br>Prénom : ";
+
+				divId.appendChild(divNom);
+				divId.appendChild(divPrenom);
+				
+				sujet.appendChild(divId);
+				
+				
+				divSujet = document.createElement("div");
+				divSujet.setAttribute("class","nbSujet");
+				divSujet.innerHTML = "BTS TP 1 - "+nomInterro+" - Sujet numéro "+i;
+				
+				sujet.appendChild(divSujet);
+			
+				enonce=document.createElement("div");
+			enonce.innerHTML= "<br>"+
+"(0,5 point par bonne réponse)<br>1/ Compléter le tableau suivant : <br><br>"+
+				"<table style=\"border: 1px solid black; width:90%;\">"+
+				"<tr><td width=\"20%\" >type erreur</td><td width=\"55%\">description/explication</td><td width=\"20%\">exemple</td></tr>"+
+				"<tr><td>"+tabTypeErreur[indiceType1][0]+"</td><td></td><td><br><br><br><br><br><br></td></tr>"+
+				"<tr><td></td><td>"+tabTypeErreur[indiceType2][1]+"</td><td><br><br><br><br><br><br></td></tr>"+
+				"<tr><td><br><br><br><br><br><br></td><td><br><br><br><br><br><br></td><td>"+tabTypeErreur[indiceType3][2]+"</td></tr>"+				
+				"</table><br><br>"+questionExemple
+				"";
+				
+				sujet.appendChild(enonce);
+				
+//				espace=document.createElement("div");
+//				espace.setAttribute("class","espace");
+//				sujet.appendChild(espace);
+
+
+			
+			}
+			
+		</script>
+		
+	</body>
+</html>
