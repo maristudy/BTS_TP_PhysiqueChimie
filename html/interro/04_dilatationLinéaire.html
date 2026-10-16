@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/style.css">
+
+        <title>générateur exercice - Dilatation linéaire</title>
+    </head>
+    <body>
+	
+		<style>
+			table {
+				border : solid 1px white;
+			}
+			
+			td {
+				border : solid 1px white;
+				width:200px;
+				height:40px;
+				text-align:center;
+			}
+
+			body{
+				font-size: 1.5em;
+			}
+			
+			.cache {
+				display:none;
+			}
+			
+			sub, sup {
+				font-size : 0.5em;
+			}
+			
+
+			#affiche {
+			margin:25px 0px 25px 0px;
+			padding : 10px;
+			border : 1px solid #eeeeee;
+			border-radius : 10px;
+			background : #333333;
+			width : fit-content;
+			}
+			
+			#reponse .big {
+				font-size: 1em;
+			}
+			
+		@media screen and (min-width: 795px) {
+			body{
+				font-size: 1em;
+				}
+			}				
+			
+		</style>
+		<header>
+			<p><a href="https://maristudy.github.io/BTS_TP_PhysiqueChimie/"> accueil du site </a> </p>
+		</header>
+		<main>
+		
+
+			<a href="../../index.html">Retour à l'accueil</a>
+			<div class="enonce">
+				<p>	x<sub>A</sub><sup>2</sup></p>
+			</div>
+			<p id="affiche">Afficher la réponse</p>
+			<div id="reponse" class="cache">
+			
+			</div>
+
+		</main>
+		<footer>
+
+		</footer>
+		
+		<script>
+			
+			
+			let Linit1 = (Math.floor(Math.random()*20)+1)*2;
+			let coef1 = (Math.floor(Math.random()*20))+1;
+			let Tinit1 = Math.floor(Math.random()*20)-10;
+			let deltaT1 = Math.floor(Math.random()*60)+40;
+			let Tfin1 = Tinit1 + deltaT1;
+			let Lfin1 = Linit1 * ((coef1*(1/1000000)*deltaT1)+1);
+			
+			let Linit2 = (Math.floor(Math.random()*20)+1)*2;
+			let coef2 = (Math.floor(Math.random()*30))+1;
+			let Tinit2 = Math.floor(Math.random()*40)-20;
+			let deltaT2 = Math.floor(Math.random()*60)+40;
+			let Tfin2 = Tinit2 + deltaT2
+			let Lfin2 = Linit2 * ((coef2*(1/1000000)*deltaT2)+1)
+
+			while(Linit1 == Linit2)
+			{
+				Linit2 = (Math.floor(Math.random()*20)+1)*2;
+			}
+			
+			while(coef1 == coef2)
+			{
+				coef2 = (Math.floor(Math.random()*30))+1;
+			}			
+			
+			while(Tinit1 == Tinit2)
+			{
+				Tinit2 = Math.floor(Math.random()*40)-20;
+			}			
+			
+			while(deltaT1 == deltaT2)
+			{
+				deltaT2 = Math.floor(Math.random()*60)+40;
+			}			
+			
+			while(Tfin1 == Tfin2)
+			{
+				deltaT2 = Math.floor(Math.random()*60)+40;
+				Tfin2 = Tinit2 + deltaT2
+			}			
+			
+			let Linit3 = (Math.floor(Math.random()*20)+1)*2;
+			let coef3 = (Math.floor(Math.random()*30))+1;
+			let Tinit3 = Math.floor(Math.random()*40)-20;
+			let deltaT3 = Math.floor(Math.random()*60)+40;
+			let Tfin3 = Tinit3 + deltaT3
+			let Lfin3 = Linit3 * ((coef3*(1/1000000)*deltaT3)+1)			
+			
+			while( (Linit1 == Linit3) || (Linit3 == Linit2) )
+			{
+				Linit3 = (Math.floor(Math.random()*20)+1)*2;
+			}
+			
+			while( (coef1 == coef3) || (coef2 == coef3) )
+			{
+				coef3 = (Math.floor(Math.random()*30))+1;
+			}			
+			
+			while( (Tinit1 == Tinit3) || (Tinit3 == Tinit2) )
+			{
+				Tinit3 = Math.floor(Math.random()*40)-20;
+			}			
+			
+			while( (deltaT1 == deltaT3) || (deltaT3 == deltaT2) )
+			{
+				deltaT3 = Math.floor(Math.random()*60)+40;
+			}			
+			
+			while( (Tfin1 == Tfin3) || (Tfin3 == Tfin2) )
+			{
+				deltaT3 = Math.floor(Math.random()*60)+40;
+				Tfin3 = Tinit3 + deltaT3
+			}				
+			
+			let espace ="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+			
+			let Q1 = "Q1 : Vous savez que : L<sub>initial</sub> = "+Linit1+" mètres"+espace+" coeficient dilatation linéaire = "+coef1+" x 10<sup>-6</sup> °C<sup>-1</sup><br>"+
+			"Température  initiale = "+Tinit1+" °C"+espace+"Température finale = "+Tfin1+" °C<br>"+
+			"(/0.5) Quelle formule permet de calculer la dilatation linéaire ΔL ?<br><br><br>(/0.5)Calculez la longueur finale : <br><br><br>(/0.5) phrase réponse : <br><br><br>";
+			let R1 = "R1 : (/0.5) On applique la formule ΔL = α x L<sub>initiale</sub> x ΔT. <br><br>(/0.5)On obtient ΔL = "+coef1+"x10<sup>-6</sup> x "+Linit1+" x "+deltaT1+"=> ΔL = "+(Lfin1-Linit1)+" mètres"+
+			". <br><br>Comme ΔL = L<sub>final</sub> - L<sub>initial</sub>, on a L<sub>final</sub> = "+Lfin1+" mètres <br><br>(/0.5) La longueur finale est de "+Lfin1+" mètres<br>";
+
+			let Q2 = "Q2 : Vous savez que : L<sub>initiale</sub> = "+Linit2+" mètres"+espace+"L<sub>finale</sub> = "+Lfin2+" mètres <br>"+
+			"température initiale = "+Tinit2+" °C"+espace+"température finale = "+Tfin2+" °C. <br>(/0.5) Donner la formule qui vous permet de calculer α, le coefficient de dilatation linéaire ?<br><br><br>"+
+			"(/0.5)Calculez α : <br><br><br>(/0.5) phrase réponse : <br><br><br>";
+			let R2 = "<br>R2 : (/0.5) on modifie la formule ΔL = α x L<sub>initiale</sub> x ΔT => α = (ΔL)/(L<sub>initiale</sub> x ΔT) <br><br>(/0.5) α=("+Lfin2+" - "+Linit2+") / ( "+Linit2+"x ( "+Tfin2+" - "+Tinit2+")) = "+coef2+" x10<sup>-6</sup> °C<sup>-1</sup><br><br> (/0.5)Le coefficient de dilatation linéaire du matériaux est de "+coef2+" x10<sup>-6</sup> °C<sup>-1</sup><br>";			
+
+			let Q3 = "Q3 : Vous savez que : L<sub>initiale</sub> = "+Linit3+" mètres"+espace+"L<sub>finale</sub> = "+Lfin3+" mètres <br>"+
+			" coeficient dilatation linéaire = "+coef3+" x 10<sup>-6</sup> °C<sup>-1</sup>"+espace+"température initiale = "+Tinit3+" °C"+"<br>(/0.5) Quelle formule vous permet de calculer ΔT ?<br><br><br>"+
+			"(/0.5) Calculez T<sub>final</sub> : <br><br><br>(/0.5) phrase réponse :";
+			let R3 = "<br>R3 : (/0.5) on modifie la formule ΔL = α x L<sub>initiale</sub> x ΔT => ΔT = (ΔL)/(L<sub>initiale</sub> x α)<br><br>(/0.5) ΔT = ("+Lfin3+" - "+Linit3+" ) / ( "+Linit3+" x "+coef3+" x 10 <sup>-6</sup> => ΔT = "+(Tfin3-Tinit3)+" => T<sub>finale</sub> = "+Tfin3+" °C<br><br>"+
+			"(/0.5) La température finale est de "+Tfin3+" °C<br>";
+			
+			enonce = document.getElementsByClassName("enonce")[0];
+			enonce.innerHTML= Q1+Q2+Q3;
+				 
+		<!-- <sub> pour indice <sup> pour exposant &infin; symbole infini ; &Delta symbol delta;-->
+		<!-- https://www.w3schools.com/html/html_symbols.asp -->
+		
+			reponse = document.getElementById("reponse");
+			reponse.innerHTML= "<br>"+R1+R2+R3;                                                                                                                                      
+	
+
+			affiche=document.getElementById("affiche");
+			affiche.addEventListener("click",() => {
+				document.getElementById("reponse").classList.toggle("cache");
+		
+			});
+			
+		</script>
+		
+	</body>
+</html>

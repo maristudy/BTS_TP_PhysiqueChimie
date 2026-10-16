@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/style.css">
+
+        <title>générateur exercice - Dilatation linéaire</title>
+
+	
+		<style>
+			body {
+				background-color:#FFFFFF;
+				color:#000000;
+				font-size : 15px;
+				font-family :sans-serif;
+			}
+			table {
+				margin-top: 10px;
+				border : solid 1px black;
+				border-spacing: 0;
+			}
+			
+			td {
+				border : solid 1px black;
+				width:300px;
+				height:50px;
+				text-align:center;
+				border-spacing: 0;
+			}
+			
+			tr {
+				border-spacing: 0;
+			}
+
+			cache {
+				display:none;
+			}
+
+			#affiche {
+				margin:25px 0px 25px 0px;
+			}
+			
+			.identite {
+				display:flex;
+				width:100%
+				border-bottom : solid 1px black;
+				margin-top : 15px;
+			}
+			
+			.identite div {
+				width:50%;
+			}
+			
+			.nbSujet {
+				text-align: center;
+				margin-top:20px;
+				padding-bottom:20px;
+				border-bottom : solid 1px black;
+			}
+					
+			.espace{
+			width:10px;
+			height:500px;
+			}
+			
+			.tabreponse td {
+				width:150px;
+				height:25px;			
+			}
+			
+			.tabreponse {
+				break-after: page;
+			}
+
+			.reponse {
+				break-before: page;
+				border-bottom : solid 1px black;
+			}
+			
+			hr {
+			margin-bottom:15px;
+			}
+			
+			
+			.big {
+				font-size: 1em;
+			}			
+			
+			sub, sup {
+				font-size : 0.5em;
+			}			
+			
+			@media print {
+				background-color:#FFFFFF;
+			}
+			
+			@media file {
+				background-color:#FFFFFF;
+			}
+		</style>
+		
+    </head>
+    <body>		
+		<header>
+		</header>
+		<main id="sujet">
+		</main>
+		<footer>
+		</footer>
+		
+		<script>
+		
+			let nbEleves = 15;
+			let nomInterro = "Dilatation linéaire";
+			
+		
+	body=document.getElementById("sujet");
+	tab=document.createElement("p");
+	body.appendChild(tab);
+			
+			
+			
+			for(let i=0;i<=nbEleves;i++)
+			{
+
+			
+			let Linit1 = (Math.floor(Math.random()*20)+1)*2;
+			let coef1 = (Math.floor(Math.random()*20))+1;
+			let Tinit1 = Math.floor(Math.random()*20)-10;
+			let deltaT1 = Math.floor(Math.random()*60)+40;
+			let Tfin1 = Tinit1 + deltaT1;
+			let Lfin1 = Linit1 * ((coef1*(1/1000000)*deltaT1)+1);
+			
+			let Linit2 = (Math.floor(Math.random()*20)+1)*2;
+			let coef2 = (Math.floor(Math.random()*30))+1;
+			let Tinit2 = Math.floor(Math.random()*40)-20;
+			let deltaT2 = Math.floor(Math.random()*60)+40;
+			let Tfin2 = Tinit2 + deltaT2
+			let Lfin2 = Linit2 * ((coef2*(1/1000000)*deltaT2)+1)
+
+			while(Linit1 == Linit2)
+			{
+				Linit2 = (Math.floor(Math.random()*20)+1)*2;
+			}
+			
+			while(coef1 == coef2)
+			{
+				coef2 = (Math.floor(Math.random()*30))+1;
+			}			
+			
+			while(Tinit1 == Tinit2)
+			{
+				Tinit2 = Math.floor(Math.random()*40)-20;
+			}			
+			
+			while(deltaT1 == deltaT2)
+			{
+				deltaT2 = Math.floor(Math.random()*60)+40;
+			}			
+			
+			while(Tfin1 == Tfin2)
+			{
+				deltaT2 = Math.floor(Math.random()*60)+40;
+				Tfin2 = Tinit2 + deltaT2
+			}			
+			
+			let Linit3 = (Math.floor(Math.random()*20)+1)*2;
+			let coef3 = (Math.floor(Math.random()*30))+1;
+			let Tinit3 = Math.floor(Math.random()*40)-20;
+			let deltaT3 = Math.floor(Math.random()*60)+40;
+			let Tfin3 = Tinit3 + deltaT3
+			let Lfin3 = Linit3 * ((coef3*(1/1000000)*deltaT3)+1)			
+			
+			while( (Linit1 == Linit3) || (Linit3 == Linit2) )
+			{
+				Linit3 = (Math.floor(Math.random()*20)+1)*2;
+			}
+			
+			while( (coef1 == coef3) || (coef2 == coef3) )
+			{
+				coef3 = (Math.floor(Math.random()*30))+1;
+			}			
+			
+			while( (Tinit1 == Tinit3) || (Tinit3 == Tinit2) )
+			{
+				Tinit3 = Math.floor(Math.random()*40)-20;
+			}			
+			
+			while( (deltaT1 == deltaT3) || (deltaT3 == deltaT2) )
+			{
+				deltaT3 = Math.floor(Math.random()*60)+40;
+			}			
+			
+			while( (Tfin1 == Tfin3) || (Tfin3 == Tfin2) )
+			{
+				deltaT3 = Math.floor(Math.random()*60)+40;
+				Tfin3 = Tinit3 + deltaT3
+			}				
+			
+			let espace ="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+			
+			let Q1 = "Q1 : Vous savez que : L<sub>initial</sub> = "+Linit1+" mètres"+espace+" coeficient dilatation linéaire = "+coef1+" x 10<sup>-6</sup> °C<sup>-1</sup><br>"+
+			"Température  initiale = "+Tinit1+" °C"+espace+"Température finale = "+Tfin1+" °C<br>"+
+			"(/0.5) Quelle formule permet de calculer la dilatation linéaire ΔL ?<br><br><br>(/0.5)Calculez la longueur finale : <br><br><br><br><br><br><br>(/0.5) phrase réponse : <br><br><br>";
+			let R1 = "R1 : (/0.5) On applique la formule ΔL = α x L<sub>initiale</sub> x ΔT. <br>(/0.5)On obtient ΔL = "+coef1+"x10<sup>-6</sup> x "+Linit1+" x "+deltaT1+"=> ΔL = "+(Lfin1-Linit1)+" mètres"+
+			". <br>Comme ΔL = L<sub>final</sub> - L<sub>initial</sub>, on a L<sub>final</sub> = "+Lfin1+" mètres <br>(/0.5) La longueur finale est de "+Lfin1+" mètres";
+
+			let Q2 = "Q2 : Vous savez que : L<sub>initiale</sub> = "+Linit2+" mètres"+espace+"L<sub>finale</sub> = "+Lfin2+" mètres <br>"+
+			"température initiale = "+Tinit2+" °C"+espace+"température finale = "+Tfin2+" °C. <br>(/0.5) Donner la formule qui vous permet de calculer α, le coefficient de dilatation linéaire ?<br><br><br>"+
+			"(/0.5)Calculez α : <br><br><br><br><br>(/0.5) phrase réponse : <br><br><br>";
+			let R2 = "<br>R2 : (/0.5) on modifie la formule ΔL = α x L<sub>initiale</sub> x ΔT => α = (ΔL)/(L<sub>initiale</sub> x ΔT) <br>(/0.5) α=("+Lfin2+" - "+Linit2+") / ( "+Linit2+"x ( "+Tfin2+" - "+Tinit2+")) = "+coef2+" x10<sup>-6</sup> °C<sup>-1</sup><br> (/0.5)Le coefficient de dilatation linéaire du matériaux est de "+coef2+" x10<sup>-6</sup> °C<sup>-1</sup>";			
+
+			let Q3 = "Q3 : Vous savez que : L<sub>initiale</sub> = "+Linit3+" mètres"+espace+"L<sub>finale</sub> = "+Lfin3+" mètres <br>"+
+			" coeficient dilatation linéaire = "+coef3+" x 10<sup>-6</sup> °C<sup>-1</sup>"+espace+"température initiale = "+Tinit3+" °C"+"<br>(/0.5) Quelle formule vous permet de calculer ΔT ?<br><br><br>"+
+			"(/0.5) Calculez T<sub>final</sub> : <br><br><br><br><br>(/0.5) phrase réponse :";
+			let R3 = "<br>R3 : (/0.5) on modifie la formule ΔL = α x L<sub>initiale</sub> x ΔT => ΔT = (ΔL)/(L<sub>initiale</sub> x α)<br>(/0.5) ΔT = ("+Lfin3+" - "+Linit3+" ) / ( "+Linit3+" x "+coef3+" x 10 <sup>-6</sup> => ΔT = "+(Tfin3-Tinit3)+" => T<sub>finale</sub> = "+Tfin3+" °C<br>"+
+			"(/0.5) La température finale est de "+Tfin3+" °C";
+	
+			enonce = document.getElementsByClassName("enonce")[0];
+					
+			reponse = document.getElementById("reponse");
+                                                                                                                                        
+			
+				sujet = document.getElementById("sujet");
+
+				reponse = document.createElement("div");
+				reponse.setAttribute("class","reponse");
+//				reponse.setAttribute("style","break-after: page;");
+				reponse.innerHTML = "BTS TP  - "+nomInterro+" - Correction numéro "+i+"<br>" ;
+			reponse.innerHTML= reponse.innerHTML + "<br>"+R1+R2+R3;                                                                                                                                                                    
+	
+				//"<p >Pour la conversion hexa vers binaire ( et réciproquement ) on utilise le tableau<br>"+
+				//"Pour la conversion du décimal vers une autre base, on utilise les divisions successives ( de 2 pour le binaire et de 16 pour l'hexa )<br>"+
+				//"Pour la conversion du binaire vers le décimal, on utilise les puissances de 2 ( ou les puissances de 16 pour l'hexa )</p>";		
+				sujet.appendChild(reponse);
+				
+				divId=document.createElement("div");
+				divId.setAttribute("class","identite");
+			
+				divNom=document.createElement("div");
+				divNom.innerHTML="<br>Nom : "
+			
+				divPrenom=document.createElement("div");
+				divPrenom.innerHTML="<br>Prénom : ";
+
+				divId.appendChild(divNom);
+				divId.appendChild(divPrenom);
+				
+				sujet.appendChild(divId);
+				
+				
+				divSujet = document.createElement("div");
+				divSujet.setAttribute("class","nbSujet");
+				divSujet.innerHTML = "BTS TP - "+nomInterro+" - Sujet numéro "+i;
+				
+				sujet.appendChild(divSujet);
+			
+				enonce=document.createElement("div");
+			enonce.innerHTML= enonce.innerHTML= Q1+Q2+Q3;
+				
+				sujet.appendChild(enonce);
+				
+//				espace=document.createElement("div");
+//				espace.setAttribute("class","espace");
+//				sujet.appendChild(espace);
+
+
+			
+			}
+			
+		</script>
+		
+	</body>
+</html>
