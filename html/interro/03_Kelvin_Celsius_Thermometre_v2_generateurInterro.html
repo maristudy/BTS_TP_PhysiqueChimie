@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/style.css">
+
+        <title>générateur exercice - Température et thermomètre</title>
+
+	
+		<style>
+			body {
+				background-color:#FFFFFF;
+				color:#000000;
+				font-size : 15px;
+				font-family :sans-serif;
+			}
+			table {
+				margin-top: 10px;
+				border : solid 1px black;
+				border-spacing: 0;
+			}
+			
+			td {
+				border : solid 1px black;
+				width:300px;
+				height:50px;
+				text-align:center;
+				border-spacing: 0;
+			}
+			
+			tr {
+				border-spacing: 0;
+			}
+
+			cache {
+				display:none;
+			}
+
+			#affiche {
+				margin:25px 0px 25px 0px;
+			}
+			
+			.identite {
+				display:flex;
+				width:100%
+				border-bottom : solid 1px black;
+				margin-top : 15px;
+			}
+			
+			.identite div {
+				width:50%;
+			}
+			
+			.nbSujet {
+				text-align: center;
+				margin-top:20px;
+				padding-bottom:20px;
+				border-bottom : solid 1px black;
+			}
+					
+			.espace{
+			width:10px;
+			height:500px;
+			}
+			
+			.tabreponse td {
+				width:150px;
+				height:25px;			
+			}
+			
+			.tabreponse {
+				break-after: page;
+			}
+
+			.reponse {
+				break-before: page;
+				border-bottom : solid 1px black;
+			}
+			
+			hr {
+			margin-bottom:15px;
+			}
+			
+			
+			.big {
+				font-size: 1em;
+			}			
+			
+			sub, sup {
+				font-size : 0.5em;
+			}			
+			
+			@media print {
+				background-color:#FFFFFF;
+			}
+			
+			@media file {
+				background-color:#FFFFFF;
+			}
+		</style>
+		
+    </head>
+    <body>		
+		<header>
+		</header>
+		<main id="sujet">
+		</main>
+		<footer>
+		</footer>
+		
+		<script>
+		
+			let nbEleves = 15;
+			let nomInterro = "Température et thermomètre";
+			
+		
+	body=document.getElementById("sujet");
+	tab=document.createElement("p");
+	body.appendChild(tab);
+			
+
+
+
+
+
+			avantagesContact="<br>On peut mesurer une température de surface si la sonde ou la surface le permet | On peut mesurer une température interne lorsque la sonde pénètre dans la matière | On peut mesurer la température d'un gaz ou d'un liquide";
+			inconvenientsContact="Le temps de réponse est assez lent. Il faut attendre que le thermomètre se mette à l'équilibre thermique | L'exactitude de la mesure dépend de la qualité du contact sonde/cible | La température maximale est limitée par la résistance des matériaux";
+			
+			avantagesIR="La mesure est instantanée | Ils peuvent mesurer les températures très élevées | Ils fonctionnent lorsqu'il est impossible de toucher la cible (liquide corrosif, cylindre en rotation) | La mesure est fiable et rapide";
+			inconvenientsIR="Il peut mesurer uniquement une température de surface | On ne peut pas mesurer la température d'un gaz | il faut configurer l'emissivité | Il fonctionne avec des pile ou une batterie";
+						
+			tabThermometre =[ 	["Thermomètre à liquide","Un liquide coloré se dilate dans un tube en verre. ","Fonctionne sans électricité | La mesure est précise | En fonction du choix du liquide et des matériaux, il peut être utilisé entre -200°C et +1000 °C"+avantagesContact,"Le tube de verre est très fragile | "+inconvenientsContact] ,
+								["Thermomètre bimétallique","Il est composé d'une lame bimétallique qui se déforme sous l'effet de la chaleur. Cette déformation fait bouger une aiguille qui indique la température","Fonctionne sans électricité | "+avantagesContact,"Le temps de réponse est lent | Ils sont sensibles aux vibrations | "+inconvenientsContact],
+								["Capteur PT100","La température fait varier la résistance électrique du platine ; l'appareil mesure cette résistance et en déduit la température.","Bonne précision | bonne stabilité | bonne répétabilité | plage de mesure importante | "+avantagesContact,"Nécessite une alimentation et une électronique de mesure | réponse généralement moins rapide qu'un thermocouple | la mesure peut être influencée par les conditions de montage. | "+inconvenientsContact],
+								["Thermocouple","Une différence de température entre deux jonctions de métaux différents produit une tension électrique (effet Seebeck).","Très rapide | peu coûteux | petites dimensions | adapté aux températures élevées et aux vibrations | "+avantagesContact,"Ils fonctionnent avec des piles ou une batterie | Moins précis qu'un PT100 | "+inconvenientsContact],
+								["Thermomètre Infrarouge","Un objet émet un rayonnement infrarouge ; le thermomètre le détecte et en déduit sa température de surface.",""+avantagesIR,""+inconvenientsIR]
+								];
+
+			body.innerHTML = body.innerHTML + "<table>"+
+			"<tr><td style=\"width:10%;\">Nom</td><td style=\"width:19%;\">Principe</td><td>avantages</td><td>inconvéniants</td></tr>"+
+			"<tr><td style=\"width:10%;\">"+tabThermometre[0][0]+"</td><td style=\"width:19%;\">"+tabThermometre[0][1]+"</td><td>"+tabThermometre[0][2]+"</td><td>"+tabThermometre[0][3]+"</td></tr>"+
+			"<tr><td style=\"width:10%;\">"+tabThermometre[1][0]+"</td><td style=\"width:19%;\">"+tabThermometre[1][1]+"</td><td>"+tabThermometre[1][2]+"</td><td>"+tabThermometre[1][3]+"</td></tr>"+
+			"<tr><td style=\"width:10%;\">"+tabThermometre[2][0]+"</td><td style=\"width:19%;\">"+tabThermometre[2][1]+"</td><td>"+tabThermometre[2][2]+"</td><td>"+tabThermometre[2][3]+"</td></tr>"+
+			"<tr><td style=\"width:10%;\">"+tabThermometre[3][0]+"</td><td style=\"width:19%;\">"+tabThermometre[3][1]+"</td><td>"+tabThermometre[3][2]+"</td><td>"+tabThermometre[3][3]+"</td></tr>"+
+			"<tr><td style=\"width:10%;\">"+tabThermometre[4][0]+"</td><td style=\"width:19%;\">"+tabThermometre[4][1]+"</td><td>"+tabThermometre[4][2]+"</td><td>"+tabThermometre[4][3]+"</td></tr>"+
+			"</table>"
+			
+			for(let i=0;i<=nbEleves;i++)
+			{
+
+			
+			C1 = Math.floor(Math.random()*200);
+			C2 = Math.floor(Math.random()*200);
+			//indiceThermo = Math.floor(Math.random()*3);
+			indiceThermo = nbEleves%5;
+			
+			while(C1 == C2)
+			{
+				C2 = Math.floor(Math.random()*200);
+			}
+			
+			C1=C1-60;
+			C2=C2-60;
+			
+			K1=C1+273;
+			K2=C2+273;
+			
+
+
+	
+			enonce = document.getElementsByClassName("enonce")[0];
+		
+			reponse = document.getElementById("reponse");
+                                                                                                                                        
+			
+				sujet = document.getElementById("sujet");
+
+				reponse = document.createElement("div");
+				reponse.setAttribute("class","reponse");
+//				reponse.setAttribute("style","break-after: page;");
+				reponse.innerHTML = "BTS TP  - "+nomInterro+" - Correction numéro "+i+"<br>" +
+			"<br>(/0.5) Question 1 : Convertissez en Kelvin la température de "+C1+" °C : "+K1+",15 K"+
+				 "<br>(/0.5) Question 2 : Convertissez en degrés Celsius la température de "+K2+",15 K : "+C2+" °C<br>"+
+				 "Question 3 : Vous disposez d'un "+tabThermometre[indiceThermo][0]+".<br>(/0.5) Donnez le principe de fonctionnement de ce type de thermomètre : <br>"+tabThermometre[indiceThermo][1]+
+				 "<br><br>(/1) Donnez 2 avantages de ce type de thermomètre : <br>"+tabThermometre[indiceThermo][2]+
+				 "<br><br>(/1) Donnez 2 inconvénients de ce type de thermomètre : <br>"+tabThermometre[indiceThermo][3] +
+				 "<br><br>";                                                                                                                                                                    
+	
+				//"<p >Pour la conversion hexa vers binaire ( et réciproquement ) on utilise le tableau<br>"+
+				//"Pour la conversion du décimal vers une autre base, on utilise les divisions successives ( de 2 pour le binaire et de 16 pour l'hexa )<br>"+
+				//"Pour la conversion du binaire vers le décimal, on utilise les puissances de 2 ( ou les puissances de 16 pour l'hexa )</p>";		
+				sujet.appendChild(reponse);
+				
+				divId=document.createElement("div");
+				divId.setAttribute("class","identite");
+			
+				divNom=document.createElement("div");
+				divNom.innerHTML="<br>Nom : "
+			
+				divPrenom=document.createElement("div");
+				divPrenom.innerHTML="<br>Prénom : ";
+
+				divId.appendChild(divNom);
+				divId.appendChild(divPrenom);
+				
+				sujet.appendChild(divId);
+				
+				
+				divSujet = document.createElement("div");
+				divSujet.setAttribute("class","nbSujet");
+				divSujet.innerHTML = "BTS TP - "+nomInterro+" - Sujet numéro "+i;
+				
+				sujet.appendChild(divSujet);
+			
+				enonce=document.createElement("div");
+			enonce.innerHTML= "<br>"+"<br>(/0.5) Question 1 : Convertissez en Kelvin la température de "+C1+" °C : <br><br>"+
+				 "<br>(/0.5) Question 2 : Convertissez en degrés Celsius la température de "+K2+",15 K : <br><br>"+
+				 "Question 3 : Vous disposez d'un thermomètre "+tabThermometre[indiceThermo][0]+".<br>(/0.5) Donnez le principe de fonctionnement de ce type de thermomètre : <br><br><br><br><br>"+
+				 "(/1) Donnez 2 avantages de ce type de thermomètre : <br><br><br><br><br>"+
+				 "(/1) Donnez 2 inconvénients de ce type de thermomètre : <br><br><br><br><br>"+
+				"";
+				
+				sujet.appendChild(enonce);
+				
+//				espace=document.createElement("div");
+//				espace.setAttribute("class","espace");
+//				sujet.appendChild(espace);
+
+
+			
+			}
+			
+		</script>
+		
+	</body>
+</html>
