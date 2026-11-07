@@ -1,0 +1,1488 @@
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BTS TP — physique-chimie : bilan de l'année</title>
+	<style>
+  :root {
+    font-family: Inter, system-ui, sans-serif;
+    --bg: #f8fafc; --fg: #111827; --muted: #6b7280; --border: #e2e8f0;
+    --panel: #ffffff; --thead: #f1f5f9; --dom-bg: #e0e7ff; --dom-fg: #3730a3;
+    --input-bg: #ffffff; --btn-bg: #ffffff; --btn-on: #1d4ed8; --empty: #cbd5e1;
+  }
+  body.dark {
+    --bg: #0f172a; --fg: #e2e8f0; --muted: #94a3b8; --border: #334155;
+    --panel: #1e293b; --thead: #0f172a; --dom-bg: #312e81; --dom-fg: #c7d2fe;
+    --input-bg: #1e293b; --btn-bg: #1e293b; --btn-on: #3b82f6; --empty: #475569;
+  }
+  body { margin: 0; padding: 1rem; background: var(--bg); color: var(--fg); }
+  h1 { font-size: 1.3rem; margin: 0 0 .2rem; }
+  .sub { color: var(--muted); font-size: .85rem; margin-bottom: .8rem; padding-right: 3rem; }
+  #search { width: 320px; max-width: 100%; padding: .45rem .7rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: .6rem; background: var(--input-bg); color: var(--fg); }
+  .filters { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .9rem; }
+  .filters button { border: 1px solid var(--border); background: var(--btn-bg); color: var(--fg); border-radius: 999px; padding: .25rem .7rem; font-size: .8rem; cursor: pointer; }
+  .filters button.on { background: var(--btn-on); border-color: var(--btn-on); color: #fff; }
+  #count { font-size: .8rem; color: var(--muted); margin-bottom: .5rem; }
+  #themeBtn { position: fixed; top: .6rem; right: .8rem; z-index: 10; border: 1px solid var(--border); background: var(--btn-bg); color: var(--fg); border-radius: 999px; padding: .3rem .7rem; font-size: 1rem; cursor: pointer; }
+  .tblwrap { border: 1px solid var(--border); border-radius: 10px; background: var(--panel); }
+  table { border-collapse: collapse; width: 100%; font-size: .82rem; table-layout: fixed; }
+  th, td { border-bottom: 1px solid var(--border); padding: .45rem .55rem; text-align: left; vertical-align: top; overflow-wrap: break-word; word-break: break-word; }
+  th { position: sticky; top: 0; background: var(--thead); z-index: 3; font-size: .78rem; }
+  tr.dom td { background: var(--dom-bg); font-weight: 700; color: var(--dom-fg); position: sticky; top: 38px; z-index: 2; }
+  tr[id] { scroll-margin-top: 90px; }
+  td.id { font-family: ui-monospace, monospace; font-weight: 600; }
+  td.mod { color: var(--muted); font-size: .78rem; }
+  td.cap { font-size: .8rem; }
+  td.conn { font-size: .78rem; }
+  td.res { font-size: .75rem; }
+  .ref { display: inline-block; border-radius: 999px; padding: .1rem .5rem; font-size: .72rem; font-weight: 600; margin: 1px; white-space: nowrap; }
+  .r-cap { background: #fef3c7; color: #92400e; }
+  .r-2de { background: #dcfce7; color: #166534; }
+  .r-1re { background: #dbeafe; color: #1e40af; }
+  .r-tle { background: #ede9fe; color: #5b21b6; }
+  .r-bts { background: #fce7f3; color: #9d174d; }
+  .r-c3 { background: #ffedd5; color: #9a3412; }
+  .r-c4 { background: #ccfbf1; color: #0f766e; }
+  a.badge { display: inline-block; border-radius: 6px; padding: .08rem .35rem; font-size: .68rem; font-weight: 700; margin: 1px; text-decoration: none; background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+  a.badge.lls { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+  a.badge.phet { background: #f3e8ff; color: #6b21a8; border-color: #e9d5ff; }
+  a.badge.edu { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+  a.badge.un { background: #cffafe; color: #0e7490; border-color: #a5f3fc; }
+  a.badge.fg { background: #d9f99d; color: #3f6212; border-color: #bef264; }
+  body.dark a.badge.fg { background: #1a2e05; color: #d9f99d; border-color: #3f6212; }
+  a.badge.iam { background: #fce7f3; color: #9d174d; border-color: #fbcfe8; }
+  body.dark a.badge.un { background: #083344; color: #a5f3fc; border-color: #0e7490; }
+  body.dark a.badge.iam { background: #500724; color: #fbcfe8; border-color: #9d174d; }
+  body.dark a.badge.edu { background: #451a03; color: #fde68a; border-color: #92400e; }
+  body.dark a.badge.phet { background: #3b0764; color: #e9d5ff; border-color: #6b21a8; }
+  body.dark a.badge.lls { background: #14532d; color: #bbf7d0; border-color: #166534; }
+  body.dark a.badge { background: #164e63; color: #bae6fd; border-color: #155e75; }
+  a.pre { display: inline-block; font-family: ui-monospace, monospace; font-size: .66rem; font-weight: 600; color: #0369a1; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; padding: .05rem .3rem; margin: 1px; text-decoration: none; white-space: nowrap; }
+  body.dark a.pre { background: #1e293b; color: #93c5fd; border-color: #334155; }
+  .empty { color: var(--empty); }
+  .legend { font-size: .75rem; color: var(--muted); margin-top: .6rem; }
+	</style>
+</head>
+
+<body class="dark">
+	<button id="themeBtn" title="Basculer clair / sombre">☀️</button>
+	<h1>🧪 BTS TP — physique-chimie : bilan de l'année</h1>
+
+	<div class="tblwrap">
+		<table id="tbl">
+			<thead>
+				<tr><th>ID</th><th>Module</th><th>Capacités</th><th>Connaissances</th><th>Statut</th>
+				</tr></thead>
+			<tbody id="tbody">
+				<tr class="dom">
+					<td colspan="5">📘 Mesures et incertitudes</td>
+				</tr>
+				<tr id="MEI6">
+					<td class="id">MEI6</td>
+					<td class="mod">Mesures et incertitudes</td>
+					<td class="cap">Variabilité de la mesure d'une grandeur physique.</td>
+					<td class="conn">Exploiter une série de mesures indépendantes d'une grandeur physique : histogramme, moyenne et écart-type.</td>
+					<td class="res stat" id="st-MEI6"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEI7">
+					<td class="id">MEI7</td>
+					<td class="mod">Mesures et incertitudes</td>
+					<td class="cap">Variabilité de la mesure d'une grandeur physique.</td>
+					<td class="conn">Discuter de l'influence de l'instrument de mesure et du protocole.</td>
+					<td class="res stat" id="st-MEI7"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEI8">
+					<td class="id">MEI8</td>
+					<td class="mod">Mesures et incertitudes</td>
+					<td class="cap">Variabilité de la mesure d'une grandeur physique.</td>
+					<td class="conn">Évaluer qualitativement la dispersion d'une série de mesures indépendantes.</td>
+					<td class="res stat" id="st-MEI8"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEI9">
+					<td class="id">MEI9</td>
+					<td class="mod">Mesures et incertitudes</td>
+					<td class="cap">Incertitude-type.</td>
+					<td class="conn">Définir qualitativement une incertitude-type.</td>
+					<td class="res stat" id="st-MEI9"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEI10">
+					<td class="id">MEI10</td>
+					<td class="mod">Mesures et incertitudes</td>
+					<td class="cap">Incertitude-type.</td>
+					<td class="conn">Procéder à l'évaluation d'une incertitude-type par une approche statistique (évaluation de type A).</td>
+					<td class="res stat" id="st-MEI10"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEI11">
+					<td class="id">MEI11</td>
+					<td class="mod">Mesures et incertitudes</td>
+					<td class="cap">Incertitude-type.</td>
+					<td class="conn">Procéder à l'évaluation d'une incertitude-type par une autre approche que statistique (évaluation de type B).</td>
+					<td class="res stat" id="st-MEI11"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEI12">
+					<td class="id">MEI12</td>
+					<td class="mod">Mesures et incertitudes</td>
+					<td class="cap">Incertitudes-types composées.</td>
+					<td class="conn">Évaluer l'incertitude-type d'une grandeur s'exprimant en fonction d'autres grandeurs, dont les incertitudes-types sont connues, à l'aide d'une formule fournie.</td>
+					<td class="res stat" id="st-MEI12"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEI13">
+					<td class="id">MEI13</td>
+					<td class="mod">Mesures et incertitudes</td>
+					<td class="cap">Écriture du résultat d'une mesure.</td>
+					<td class="conn">Écrire, avec un nombre adapté de chiffres significatifs, le résultat d'une mesure.</td>
+					<td class="res stat" id="st-MEI13"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEI14">
+					<td class="id">MEI14</td>
+					<td class="mod">Mesures et incertitudes</td>
+					<td class="cap">Comparaison de deux valeurs ; écart normalisé.</td>
+					<td class="conn">Comparer deux valeurs dont les incertitudes-types sont connues à l'aide de leur écart normalisé.</td>
+					<td class="res stat" id="st-MEI14"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr class="dom">
+					<td colspan="5">📘 Électricité</td>
+				</tr>
+				<tr id="ELE61">
+					<td class="id">ELE61</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Intensité, tension.</td>
+					<td class="conn">Distinguer grandeurs continues et grandeurs alternatives.</td>
+					<td class="res stat" id="st-ELE61">doc00140020260904155747_t doc00141220260904161041_t doc00142920260904163015_p doc00192320261106155709_t doc00192520261106155809_t doc00192920261106160545_p doc00193520261106161409_t</td>
+				</tr>
+				<tr id="ELE62">
+					<td class="id">ELE62</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Intensité, tension.</td>
+					<td class="conn">Distinguer, pour un signal sinusoïdal, grandeurs efficaces et grandeurs crêtes.</td>
+					<td class="res stat" id="st-ELE62"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="ELE63">
+					<td class="id">ELE63</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Intensité, tension.</td>
+					<td class="conn">Identifier les domaines de tensions (TBT, BT, HTA et HTB) en régime continu et en régime alternatif.</td>
+					<td class="res stat" id="st-ELE63"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="ELE64">
+					<td class="id">ELE64</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Intensité, tension.</td>
+					<td class="conn">Mettre en œuvre un système d'acquisition de données pour obtenir une représentation temporelle de grandeurs électriques.</td>
+					<td class="res stat" id="st-ELE64"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="ELE65">
+					<td class="id">ELE65</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Intensité, tension.</td>
+					<td class="conn">Proposer un protocole expérimental pour mesurer, en respectant les règles de sécurité, une tension électrique ou une intensité électrique dans un circuit en régime continu et dans un circuit en régime alternatif.</td>
+					<td class="res stat" id="st-ELE65">doc00140020260904155747_t doc00140420260904160404_t doc00141220260904161041_t doc00142820260904162814_t doc00192320261106155709_t doc00192520261106155809_t doc00192720261106160213_t doc00192920261106160545_p doc00193520261106161409_t</td>
+				</tr>
+				<tr id="ELE66">
+					<td class="id">ELE66</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Puissance électrique en régime continu et en régime sinusoïdal.</td>
+					<td class="conn">Décrire et caractériser l'effet Joule.</td>
+					<td class="res stat" id="st-ELE66">doc00140020260904155747_p doc00192420261106155809_p</td>
+				</tr>
+				<tr id="ELE67">
+					<td class="id">ELE67</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Puissance électrique en régime continu et en régime sinusoïdal.</td>
+					<td class="conn">Distinguer pour le régime sinusoïdal les divers types de puissances électriques : instantanée, active et apparente.</td>
+					<td class="res stat" id="st-ELE67"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="ELE68">
+					<td class="id">ELE68</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Puissance électrique en régime continu et en régime sinusoïdal.</td>
+					<td class="conn">Calculer une puissance électrique reçue par un récepteur.</td>
+					<td class="res stat" id="st-ELE68">doc00140020260904155747_t doc00141220260904161041_t doc00141320260904161104_t doc00142620260904162456_t doc00142720260904162525_v2_t doc00142820260904162814_t doc00142920260904163015_p doc00192320261106155709_t doc00192520261106155809_t doc00192720261106160213_t doc00192920261106160545_p doc00193020261106160724_t doc00193120261106160857_p doc00193220261106160924_p doc00193520261106161409_t doc00193620261106161457_t</td>
+				</tr>
+				<tr id="ELE69">
+					<td class="id">ELE69</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Puissance électrique en régime continu et en régime sinusoïdal.</td>
+					<td class="conn">Mesurer une puissance électrique en régime continu ou en régime sinusoïdal.</td>
+					<td class="res stat" id="st-ELE69">doc00140020260904155747_p doc00141220260904161041_p doc00141320260904161104_t doc00142620260904162456_t doc00142720260904162525_v2_t doc00192320261106155709_p doc00192520261106155809_p doc00193620261106161457_t</td>
+				</tr>
+				<tr id="ELE70">
+					<td class="id">ELE70</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Puissance électrique en régime continu et en régime sinusoïdal.</td>
+					<td class="conn">Établir un bilan de puissance pour un circuit à une seule maille.</td>
+					<td class="res stat" id="st-ELE70">doc00141220260904161041_p doc00142620260904162456_t doc00142720260904162525_v2_p doc00192320261106155709_t doc00193020261106160724_p doc00193120261106160857_p doc00193220261106160924_p doc00193620261106161457_t</td>
+				</tr>
+				<tr id="ELE71">
+					<td class="id">ELE71</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Puissance électrique en régime continu et en régime sinusoïdal.</td>
+					<td class="conn">Mettre en œuvre un protocole permettant de discuter un bilan de puissance pour un dispositif simple en régime continu ou en régime sinusoïdal.</td>
+					<td class="res stat" id="st-ELE71"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="ELE72">
+					<td class="id">ELE72</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Sécurité électrique, risques et protection du matériel et des personnes.</td>
+					<td class="conn">Extraire et exploiter les informations sur les effets physiologiques du courant électrique.</td>
+					<td class="res stat" id="st-ELE72">doc00142620260904162456_t doc00142720260904162525_v2_t doc00192420261106155809_t doc00193620261106161457_t</td>
+				</tr>
+				<tr id="ELE73">
+					<td class="id">ELE73</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Sécurité électrique, risques et protection du matériel et des personnes.</td>
+					<td class="conn">Citer et définir les principales causes des risques électriques (par contact, par arc électrique, par court-circuit) et des conséquences (électrisation, électrocution, incendie, explosion).</td>
+					<td class="res stat" id="st-ELE73">doc00142620260904162456_p doc00142720260904162525_v2_p doc00192420261106155809_t doc00193620261106161457_p</td>
+				</tr>
+				<tr id="ELE74">
+					<td class="id">ELE74</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Sécurité électrique, risques et protection du matériel et des personnes.</td>
+					<td class="conn">Identifier les situations de risque électrique.</td>
+					<td class="res stat" id="st-ELE74"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="ELE75">
+					<td class="id">ELE75</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Sécurité électrique, risques et protection du matériel et des personnes.</td>
+					<td class="conn">Justifier la présence et les caractéristiques des dispositifs permettant d'assurer la protection des matériels et des personnes (coupe-circuit, fusible, disjoncteur, disjoncteur différentiel, mise à la terre).</td>
+					<td class="res stat" id="st-ELE75">doc00141220260904161041_t doc00142620260904162456_t doc00142720260904162525_v2_t doc00192320261106155709_t doc00192420261106155809_t doc00193520261106161409_t doc00193620261106161457_t</td>
+				</tr>
+				<tr id="ELE76">
+					<td class="id">ELE76</td>
+					<td class="mod">Électricité</td>
+					<td class="cap">Sécurité électrique, risques et protection du matériel et des personnes.</td>
+					<td class="conn">Mettre en œuvre un protocole permettant de montrer l'intérêt d'un dispositif de protection électrique.</td>
+					<td class="res stat" id="st-ELE76"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="ELE81">
+					<td class="id">ELE81</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Utilisation de matériels électriques sur les chantiers.</td>
+					<td class="res stat" id="st-ELE81"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="ELE82">
+					<td class="id">ELE82</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Prévention du risque électrique en raison des dangers des arcs électriques aériens ou souterrains, des lignes électriques, etc.</td>
+					<td class="res stat" id="st-ELE82"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="ELE83">
+					<td class="id">ELE83</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Opérations sur ou à proximité des installations électriques selon le niveau d'habilitation électrique.</td>
+					<td class="res stat" id="st-ELE83"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr class="dom">
+					<td colspan="5">📘 Mécanique</td>
+				</tr>
+				<tr id="MEC73">
+					<td class="id">MEC73</td>
+					<td class="mod">Mécanique du solide — Cinématique</td>
+					<td class="cap">Référentiel. Caractère relatif du mouvement. Description du mouvement d'un solide dans deux cas particuliers : la translation, la rotation autour d'un axe fixe.</td>
+					<td class="conn">Caractériser le référentiel choisi pour l'étude d'un mouvement.</td>
+					<td class="res stat" id="st-MEC73"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC74">
+					<td class="id">MEC74</td>
+					<td class="mod">Mécanique du solide — Cinématique</td>
+					<td class="cap">Référentiel. Caractère relatif du mouvement. Description du mouvement d'un solide dans deux cas particuliers : la translation, la rotation autour d'un axe fixe.</td>
+					<td class="conn">Reconnaître et décrire, avec les grandeurs cinématiques adaptées, une translation rectiligne, une translation circulaire, une rotation autour d'un axe fixe d'un solide.</td>
+					<td class="res stat" id="st-MEC74"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC75">
+					<td class="id">MEC75</td>
+					<td class="mod">Mécanique du solide — Cinématique</td>
+					<td class="cap">Référentiel. Caractère relatif du mouvement. Description du mouvement d'un solide dans deux cas particuliers : la translation, la rotation autour d'un axe fixe.</td>
+					<td class="conn">Définir la vitesse angulaire de rotation et la relier à la fréquence de rotation.</td>
+					<td class="res stat" id="st-MEC75"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC76">
+					<td class="id">MEC76</td>
+					<td class="mod">Mécanique du solide — Cinématique</td>
+					<td class="cap">Référentiel. Caractère relatif du mouvement. Description du mouvement d'un solide dans deux cas particuliers : la translation, la rotation autour d'un axe fixe.</td>
+					<td class="conn">Exprimer la vitesse d'un point d'un solide en rotation autour d'un axe fixe en fonction de sa distance à l'axe et de la vitesse angulaire.</td>
+					<td class="res stat" id="st-MEC76"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC77">
+					<td class="id">MEC77</td>
+					<td class="mod">Mécanique du solide — Cinématique</td>
+					<td class="cap">Référentiel. Caractère relatif du mouvement. Description du mouvement d'un solide dans deux cas particuliers : la translation, la rotation autour d'un axe fixe.</td>
+					<td class="conn">Mettre en œuvre un dispositif expérimental permettant de collecter et d'exploiter des données sur un mouvement.</td>
+					<td class="res stat" id="st-MEC77"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC78">
+					<td class="id">MEC78</td>
+					<td class="mod">Mécanique du solide — Statique et dynamique</td>
+					<td class="cap">Actions mécaniques sur un système. Force résultante et moment. Couple.</td>
+					<td class="conn">Dresser un bilan d'actions sur un système mécanique simple.</td>
+					<td class="res stat" id="st-MEC78"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC79">
+					<td class="id">MEC79</td>
+					<td class="mod">Mécanique du solide — Statique et dynamique</td>
+					<td class="cap">Actions mécaniques sur un système. Force résultante et moment. Couple.</td>
+					<td class="conn">Représenter un ensemble d'actions mécaniques par une force résultante et un moment en un point.</td>
+					<td class="res stat" id="st-MEC79"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC80">
+					<td class="id">MEC80</td>
+					<td class="mod">Mécanique du solide — Statique et dynamique</td>
+					<td class="cap">Actions mécaniques sur un système. Force résultante et moment. Couple.</td>
+					<td class="conn">Établir l'expression du moment d'une force par rapport à un axe orienté en utilisant la notion de bras de levier.</td>
+					<td class="res stat" id="st-MEC80"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC81">
+					<td class="id">MEC81</td>
+					<td class="mod">Mécanique du solide — Statique et dynamique</td>
+					<td class="cap">Actions mécaniques sur un système. Force résultante et moment. Couple.</td>
+					<td class="conn">Définir un couple.</td>
+					<td class="res stat" id="st-MEC81"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC82">
+					<td class="id">MEC82</td>
+					<td class="mod">Mécanique du solide — Statique et dynamique</td>
+					<td class="cap">Référentiel galiléen. Principe de l'inertie. Principe fondamental de la dynamique.</td>
+					<td class="conn">Discuter qualitativement du caractère galiléen d'un référentiel pour une situation donnée.</td>
+					<td class="res stat" id="st-MEC82"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC83">
+					<td class="id">MEC83</td>
+					<td class="mod">Mécanique du solide — Statique et dynamique</td>
+					<td class="cap">Référentiel galiléen. Principe de l'inertie. Principe fondamental de la dynamique.</td>
+					<td class="conn">Écrire et appliquer le principe fondamental de la dynamique pour un solide en mouvement de translation, uniforme ou uniformément accéléré.</td>
+					<td class="res stat" id="st-MEC83"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC84">
+					<td class="id">MEC84</td>
+					<td class="mod">Mécanique du solide — Statique et dynamique</td>
+					<td class="cap">Référentiel galiléen. Principe de l'inertie. Principe fondamental de la dynamique.</td>
+					<td class="conn">Écrire et appliquer le principe fondamental de la dynamique pour un solide en mouvement de rotation autour d'un axe fixe, uniforme ou uniformément accéléré, l'expression du moment cinétique étant fournie.</td>
+					<td class="res stat" id="st-MEC84"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC85">
+					<td class="id">MEC85</td>
+					<td class="mod">Mécanique du solide — Statique et dynamique</td>
+					<td class="cap">Référentiel galiléen. Principe de l'inertie. Principe fondamental de la dynamique.</td>
+					<td class="conn">Réaliser une étude expérimentale exploitant le principe fondamental de la dynamique.</td>
+					<td class="res stat" id="st-MEC85"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC86">
+					<td class="id">MEC86</td>
+					<td class="mod">Mécanique du solide — Statique et dynamique</td>
+					<td class="cap">Conditions d'équilibre d'un solide.</td>
+					<td class="conn">Écrire et exploiter les conditions nécessaires à l'équilibre d'un solide soumis à trois forces au maximum.</td>
+					<td class="res stat" id="st-MEC86"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC87">
+					<td class="id">MEC87</td>
+					<td class="mod">Mécanique du solide — Statique et dynamique</td>
+					<td class="cap">Conditions d'équilibre d'un solide.</td>
+					<td class="conn">Discuter expérimentalement les conditions d'équilibre d'un solide.</td>
+					<td class="res stat" id="st-MEC87"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC88">
+					<td class="id">MEC88</td>
+					<td class="mod">Mécanique du solide — Statique et dynamique</td>
+					<td class="cap">Effet centrifuge.</td>
+					<td class="conn">Mettre en œuvre un dispositif expérimental pour décrire et interpréter l'effet centrifuge : caractère centrifuge de la force d'inertie d'entraînement dans le cas d'un référentiel en rotation uniforme autour d'un axe fixe par rapport à un référentiel galiléen.</td>
+					<td class="res stat" id="st-MEC88"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC89">
+					<td class="id">MEC89</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Forces appliquées ou réparties sur des solides (volumiques, surfaciques, linéiques, ponctuelles).</td>
+					<td class="res stat" id="st-MEC89"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC90">
+					<td class="id">MEC90</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Efforts sur les piles de ponts, les glissières de sécurité, les pare-avalanches, etc.</td>
+					<td class="res stat" id="st-MEC90"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC91">
+					<td class="id">MEC91</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Effets mécaniques provoqués par les mouvements sur les véhicules ou les ouvrages tel l'effet centrifuge.</td>
+					<td class="res stat" id="st-MEC91"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEC92">
+					<td class="id">MEC92</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Dimensionnements des chaussées (dévers).</td>
+					<td class="res stat" id="st-MEC92"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr class="dom">
+					<td colspan="5">📘 Mécanique des fluides</td>
+				</tr>
+				<tr id="MEF1">
+					<td class="id">MEF1</td>
+					<td class="mod">Mécanique des fluides — Statique des fluides</td>
+					<td class="cap">Pression dans un fluide, force pressante.</td>
+					<td class="conn">Définir la pression au sein d'un fluide et l'exprimer dans les unités usuelles.</td>
+					<td class="res stat" id="st-MEF1">doc00140420260904160404_p doc00142820260904162814_p doc00190720261106153852_p doc00191120261106154413_t doc00141420260904161137_t doc00141520260904161214_t doc00141620260904161328_v2_p doc00141820260904161458_t doc00141920260904161544_t doc00142120260904161735_t doc00142020260904161610_v2_p doc00142520260904162328_v2_t doc00191220261106154538_v2_t doc00191520261106154835_v2_t doc00191620261106154949_t doc00191720261106155050_p doc00192020261106155510_p doc00192120261106155556_p doc00192720261106160213_p doc00192820261106160400_t</td>
+				</tr>
+				<tr id="MEF2">
+					<td class="id">MEF2</td>
+					<td class="mod">Mécanique des fluides — Statique des fluides</td>
+					<td class="cap">Pression dans un fluide, force pressante.</td>
+					<td class="conn">Relier pression et force pressante.</td>
+					<td class="res stat" id="st-MEF2">doc00142520260904162328_v2_p doc00142820260904162814_p doc00190720261106153852_p doc00191120261106154413_t doc00141420260904161137_t doc00141520260904161214_t doc00141620260904161328_v2_p doc00141820260904161458_t doc00141920260904161544_t doc00142120260904161735_t doc00142020260904161610_v2_p doc00191220261106154538_v2_p doc00191520261106154835_v2_p doc00191620261106154949_t doc00191720261106155050_p doc00192020261106155510_p doc00192720261106160213_p doc00192820261106160400_t</td>
+				</tr>
+				<tr id="MEF5">
+					<td class="id">MEF5</td>
+					<td class="mod">Mécanique des fluides — Statique des fluides</td>
+					<td class="cap">l'hydrostatique.</td>
+					<td class="conn">Réaliser une étude expérimentale exploitant la relation fondamentale de la statique des fluides.</td>
+					<td class="res stat" id="st-MEF5">doc00140420260904160404_t doc00141420260904161137_t doc00141520260904161214_t doc00141620260904161328_v2_t doc00141720260904161428_p doc00141820260904161458_t doc00142020260904161610_v2_p doc00142520260904162328_v2_t doc00191220261106154538_v2_p doc00191420261106154752_p doc00191520261106154835_v2_t doc00191620261106154949_t doc00191720261106155050_t doc00192120261106155556_p doc00192820261106160400_t</td>
+				</tr>
+				<tr id="MEF6">
+					<td class="id">MEF6</td>
+					<td class="mod">Mécanique des fluides — Statique des fluides</td>
+					<td class="cap">Théorème de Pascal.</td>
+					<td class="conn">Appliquer le principe de transmission de la pression par un fluide incompressible.</td>
+					<td class="res stat" id="st-MEF6">doc00141420260904161137_t doc00141520260904161214_t doc00141620260904161328_v2_p doc00192820261106160400_t</td>
+				</tr>
+				<tr id="MEF7">
+					<td class="id">MEF7</td>
+					<td class="mod">Mécanique des fluides — Statique des fluides</td>
+					<td class="cap">Théorème de Pascal.</td>
+					<td class="conn">Citer une application du principe de transmission de la pression par un fluide incompressible.</td>
+					<td class="res stat" id="st-MEF7">doc00141420260904161137_t doc00141520260904161214_t doc00141620260904161328_v2_p doc00192820261106160400_t</td>
+				</tr>
+				<tr id="MEF8">
+					<td class="id">MEF8</td>
+					<td class="mod">Mécanique des fluides — Statique des fluides</td>
+					<td class="cap">Poussée d'Archimède.</td>
+					<td class="conn">Exploiter l'expression de la poussée d'Archimède.</td>
+					<td class="res stat" id="st-MEF8">doc00140420260904160404_t doc00141420260904161137_t doc00141520260904161214_t doc00141620260904161328_v2_t doc00142820260904162814_t doc00191620261106154949_t doc00191820261106155146_v2_t doc00191920261106155252-v2_t doc00192720261106160213_t doc00192820261106160400_t</td>
+				</tr>
+				<tr id="MEF9">
+					<td class="id">MEF9</td>
+					<td class="mod">Mécanique des fluides — Statique des fluides</td>
+					<td class="cap">Poussée d'Archimède.</td>
+					<td class="conn">Mettre en œuvre un dispositif expérimental permettant d'exploiter l'expression de la poussée d'Archimède.</td>
+					<td class="res stat" id="st-MEF9">doc00140420260904160404_t doc00141420260904161137_p doc00141520260904161214_p doc00191820261106155146_v2_t doc00191920261106155252-v2_t doc00192720261106160213_p doc00192820261106160400_p</td>
+				</tr>
+				<tr id="MEF10">
+					<td class="id">MEF10</td>
+					<td class="mod">Mécanique des fluides — Tension superficielle et capillarité</td>
+					<td class="cap">Tension superficielle et capillarité.</td>
+					<td class="conn">Citer des applications de la tension superficielle dans le domaine professionnel.</td>
+					<td class="res stat" id="st-MEF10"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEF11">
+					<td class="id">MEF11</td>
+					<td class="mod">Mécanique des fluides — Tension superficielle et capillarité</td>
+					<td class="cap">Tension superficielle et capillarité.</td>
+					<td class="conn">Mettre en œuvre un dispositif expérimental visant à étudier les phénomènes de capillarité et leurs conséquences sur les matériaux poreux.</td>
+					<td class="res stat" id="st-MEF11"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEF12">
+					<td class="id">MEF12</td>
+					<td class="mod">Mécanique des fluides — Dynamique des fluides incompressibles</td>
+					<td class="cap">Débit massique et débit volumique.</td>
+					<td class="conn">Calculer un débit massique ou volumique.</td>
+					<td class="res stat" id="st-MEF12"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEF13">
+					<td class="id">MEF13</td>
+					<td class="mod">Mécanique des fluides — Dynamique des fluides incompressibles</td>
+					<td class="cap">Conservation du débit.</td>
+					<td class="conn">Exploiter la conservation d'un débit afin de déterminer la vitesse d'un fluide.</td>
+					<td class="res stat" id="st-MEF13"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEF14">
+					<td class="id">MEF14</td>
+					<td class="mod">Mécanique des fluides — Dynamique des fluides incompressibles</td>
+					<td class="cap">Conservation de l'énergie, relation de Bernoulli.</td>
+					<td class="conn">Exploiter une relation de Bernoulli fournie dans le cas de l'écoulement permanent d'un fluide parfait.</td>
+					<td class="res stat" id="st-MEF14"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEF15">
+					<td class="id">MEF15</td>
+					<td class="mod">Mécanique des fluides — Dynamique des fluides incompressibles</td>
+					<td class="cap">Conservation de l'énergie, relation de Bernoulli.</td>
+					<td class="conn">Réaliser une étude expérimentale de l'écoulement permanent d'un fluide faisant appel à une relation de Bernoulli.</td>
+					<td class="res stat" id="st-MEF15"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEF16">
+					<td class="id">MEF16</td>
+					<td class="mod">Mécanique des fluides — Dynamique des fluides incompressibles</td>
+					<td class="cap">Viscosité.</td>
+					<td class="conn">Citer les conséquences principales du phénomène de viscosité dans les écoulements.</td>
+					<td class="res stat" id="st-MEF16"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEF17">
+					<td class="id">MEF17</td>
+					<td class="mod">Mécanique des fluides — Dynamique des fluides incompressibles</td>
+					<td class="cap">Viscosité.</td>
+					<td class="conn">Mettre en œuvre un dispositif expérimental visant à mesurer la viscosité d'un fluide.</td>
+					<td class="res stat" id="st-MEF17"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEF18">
+					<td class="id">MEF18</td>
+					<td class="mod">Mécanique des fluides — Dynamique des fluides incompressibles</td>
+					<td class="cap">Nombre de Reynolds. Régimes laminaire et turbulent.</td>
+					<td class="conn">Identifier le type laminaire ou turbulent du régime d'un écoulement, l'expression du nombre de Reynolds étant donnée.</td>
+					<td class="res stat" id="st-MEF18"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEF19">
+					<td class="id">MEF19</td>
+					<td class="mod">Mécanique des fluides — Dynamique des fluides incompressibles</td>
+					<td class="cap">Perte de charge en régime laminaire.</td>
+					<td class="conn">Citer les différents types de pertes de charge.</td>
+					<td class="res stat" id="st-MEF19"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEF20">
+					<td class="id">MEF20</td>
+					<td class="mod">Mécanique des fluides — Dynamique des fluides incompressibles</td>
+					<td class="cap">Perte de charge en régime laminaire.</td>
+					<td class="conn">Exploiter des données pour déterminer la valeur des pertes de charge en fonction du débit et de la géométrie du circuit.</td>
+					<td class="res stat" id="st-MEF20"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEF21">
+					<td class="id">MEF21</td>
+					<td class="mod">Mécanique des fluides — Dynamique des fluides incompressibles</td>
+					<td class="cap">Perte de charge en régime laminaire.</td>
+					<td class="conn">Mettre en œuvre un dispositif expérimental visant à évaluer des pertes de charge régulières et singulières.</td>
+					<td class="res stat" id="st-MEF21"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEF23">
+					<td class="id">MEF23</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Caractérisation des granulats (masse volumique apparente, masse volumique réelle).</td>
+					<td class="res stat" id="st-MEF23">doc00141920260904161544_p doc00142120260904161735_p doc00142020260904161610_v2_p doc00142220260904161853_v2_p doc00142320260904162005_t doc00142820260904162814_p doc00190720261106153852_p doc00190820261106154059_v2_p doc00190920261106154158_t doc00191020261106154253_p doc00191620261106154949_t doc00192020261106155510_t doc00192220261106155620_v2_p doc00192720261106160213_t doc00193320261106161025_t</td>
+				</tr>
+				<tr id="MEF24">
+					<td class="id">MEF24</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Dimensionnement des coffrages (poussée du béton, stabilité des coffrages).</td>
+					<td class="res stat" id="st-MEF24"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEF25">
+					<td class="id">MEF25</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Étude de la poussée des terres sur les différents types de soutènements.</td>
+					<td class="res stat" id="st-MEF25"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEF26">
+					<td class="id">MEF26</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Caractérisation de l'argilosité des sols (essai au bleu).</td>
+					<td class="res stat" id="st-MEF26"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="MEF27">
+					<td class="id">MEF27</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Dimensionnement des canalisations.</td>
+					<td class="res stat" id="st-MEF27"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr class="dom">
+					<td colspan="5">📘 Chimie</td>
+				</tr>
+				<tr id="CHI109">
+					<td class="id">CHI109</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Entités chimiques : molécules, atomes, ions. Masse, quantité de matière. Concentration en masse, concentration en quantité de matière.</td>
+					<td class="conn">Utiliser le terme adapté parmi molécule, atome, anion et cation pour qualifier une entité chimique à partir de sa formule chimique.</td>
+					<td class="res stat" id="st-CHI109">doc00141020260904160908_t doc00142820260904162814_p doc00193720261106161523_t</td>
+				</tr>
+				<tr id="CHI110">
+					<td class="id">CHI110</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Entités chimiques : molécules, atomes, ions. Masse, quantité de matière. Concentration en masse, concentration en quantité de matière.</td>
+					<td class="conn">Déterminer la quantité de matière d'une entité chimique à partir de sa masse et réciproquement.</td>
+					<td class="res stat" id="st-CHI110"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI111">
+					<td class="id">CHI111</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Entités chimiques : molécules, atomes, ions. Masse, quantité de matière. Concentration en masse, concentration en quantité de matière.</td>
+					<td class="conn">Calculer une concentration en masse ou en quantité de matière d'une entité chimique dans un système.</td>
+					<td class="res stat" id="st-CHI111"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI112">
+					<td class="id">CHI112</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Transformation chimique, réaction, équation de réaction. Bilan de matière : réactif limitant, stœchiométrie, avancement. Transformation complète et incomplète.</td>
+					<td class="conn">Dans le cas où une transformation chimique peut être modélisée par une seule réaction : • équilibrer l'équation de réaction qui modélise cette transformation ; • réaliser un bilan de matière ; • identifier le réactif limitant ; • dresser et exploiter un tableau d'avancement.</td>
+					<td class="res stat" id="st-CHI112">doc00141020260904160908_p doc00193720261106161523_p</td>
+				</tr>
+				<tr id="CHI113">
+					<td class="id">CHI113</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Transformation chimique, réaction, équation de réaction. Bilan de matière : réactif limitant, stœchiométrie, avancement. Transformation complète et incomplète.</td>
+					<td class="conn">Différencier avancement maximal et avancement final.</td>
+					<td class="res stat" id="st-CHI113"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI114">
+					<td class="id">CHI114</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Théorie de Brønsted : acide fort, base forte, acide faible, base faible. pH d'une solution aqueuse. Notion d'équilibre acido-basique. Couple acide-base. Constante d'acidité Ka. Diagramme de prédominance.</td>
+					<td class="conn">Définir, au sens de Brønsted, et reconnaître un acide et une base.</td>
+					<td class="res stat" id="st-CHI114"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI115">
+					<td class="id">CHI115</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Théorie de Brønsted : acide fort, base forte, acide faible, base faible. pH d'une solution aqueuse. Notion d'équilibre acido-basique. Couple acide-base. Constante d'acidité Ka. Diagramme de prédominance.</td>
+					<td class="conn">Décrire la différence de comportement à la dissolution dans l'eau d'un acide (respectivement une base) fort(e) ou faible.</td>
+					<td class="res stat" id="st-CHI115"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI116">
+					<td class="id">CHI116</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Théorie de Brønsted : acide fort, base forte, acide faible, base faible. pH d'une solution aqueuse. Notion d'équilibre acido-basique. Couple acide-base. Constante d'acidité Ka. Diagramme de prédominance.</td>
+					<td class="conn">Fournir et exploiter la définition mathématique du pH.</td>
+					<td class="res stat" id="st-CHI116"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI117">
+					<td class="id">CHI117</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Théorie de Brønsted : acide fort, base forte, acide faible, base faible. pH d'une solution aqueuse. Notion d'équilibre acido-basique. Couple acide-base. Constante d'acidité Ka. Diagramme de prédominance.</td>
+					<td class="conn">Citer l'étendue de la plage de pH en solution aqueuse.</td>
+					<td class="res stat" id="st-CHI117"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI118">
+					<td class="id">CHI118</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Théorie de Brønsted : acide fort, base forte, acide faible, base faible. pH d'une solution aqueuse. Notion d'équilibre acido-basique. Couple acide-base. Constante d'acidité Ka. Diagramme de prédominance.</td>
+					<td class="conn">Mesurer le pH d'une solution aqueuse.</td>
+					<td class="res stat" id="st-CHI118"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI119">
+					<td class="id">CHI119</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Théorie de Brønsted : acide fort, base forte, acide faible, base faible. pH d'une solution aqueuse. Notion d'équilibre acido-basique. Couple acide-base. Constante d'acidité Ka. Diagramme de prédominance.</td>
+					<td class="conn">Écrire l'équation de réaction d'une transformation acido-basique et exprimer la constante d'équilibre, les couples étant donnés.</td>
+					<td class="res stat" id="st-CHI119"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI120">
+					<td class="id">CHI120</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Théorie de Brønsted : acide fort, base forte, acide faible, base faible. pH d'une solution aqueuse. Notion d'équilibre acido-basique. Couple acide-base. Constante d'acidité Ka. Diagramme de prédominance.</td>
+					<td class="conn">Construire et exploiter des diagrammes de prédominance.</td>
+					<td class="res stat" id="st-CHI120"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI121">
+					<td class="id">CHI121</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Théorie de Brønsted : acide fort, base forte, acide faible, base faible. pH d'une solution aqueuse. Notion d'équilibre acido-basique. Couple acide-base. Constante d'acidité Ka. Diagramme de prédominance.</td>
+					<td class="conn">Déterminer la composition d'une solution dans un état final issu d'une transformation modélisée par une réaction acido-basique unique.</td>
+					<td class="res stat" id="st-CHI121"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI122">
+					<td class="id">CHI122</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Théorie de Brønsted : acide fort, base forte, acide faible, base faible. pH d'une solution aqueuse. Notion d'équilibre acido-basique. Couple acide-base. Constante d'acidité Ka. Diagramme de prédominance.</td>
+					<td class="conn">Mettre en œuvre un protocole expérimental exploitant une transformation acido-basique.</td>
+					<td class="res stat" id="st-CHI122"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI123">
+					<td class="id">CHI123</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Oxydant, réducteur. Couple oxydant/réducteur. Réaction d'oxydoréduction.</td>
+					<td class="conn">Reconnaître une réaction chimique d'oxydoréduction.</td>
+					<td class="res stat" id="st-CHI123">doc00140320260904160213_t doc00141020260904160908_t doc00142820260904162814_p doc00192620261106160133_p doc00193720261106161523_t doc00193820261106161625_t doc00194920261106162829_t</td>
+				</tr>
+				<tr id="CHI124">
+					<td class="id">CHI124</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Oxydant, réducteur. Couple oxydant/réducteur. Réaction d'oxydoréduction.</td>
+					<td class="conn">Identifier l'oxydant, le réducteur, les couples oxydant/réducteur mis en jeu.</td>
+					<td class="res stat" id="st-CHI124">doc00140320260904160213_t doc00140920260904160757_t doc00141020260904160908_t doc00141120260904161002_p doc00142820260904162814_p doc00192620261106160133_p doc00193420261106161223_p doc00193720261106161523_p doc00193820261106161625_t doc00194920261106162829_t</td>
+				</tr>
+				<tr id="CHI125">
+					<td class="id">CHI125</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Oxydant, réducteur. Couple oxydant/réducteur. Réaction d'oxydoréduction.</td>
+					<td class="conn">Écrire les demi-équations, puis l'équation de réaction d'une réaction d'oxydoréduction, les couples oxydant/réducteur étant donnés.</td>
+					<td class="res stat" id="st-CHI125">doc00140320260904160213_t doc00140520260904160432_t doc00140920260904160757_t doc00141020260904160908_t doc00142820260904162814_p doc00192620261106160133_p doc00193420261106161223_p doc00193720261106161523_p doc00193820261106161625_t doc00194920261106162829_p</td>
+				</tr>
+				<tr id="CHI126">
+					<td class="id">CHI126</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Influence du pH : diagrammes potentiel-pH.</td>
+					<td class="conn">Interpréter et exploiter des diagrammes potentiel-pH simples donnés.</td>
+					<td class="res stat" id="st-CHI126"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI127">
+					<td class="id">CHI127</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Influence du pH : diagrammes potentiel-pH.</td>
+					<td class="conn">Prévoir les transformations chimiques à l'aide de diagrammes potentiel-pH.</td>
+					<td class="res stat" id="st-CHI127"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI128">
+					<td class="id">CHI128</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Pile électrochimique.</td>
+					<td class="conn">Décrire la constitution et interpréter le fonctionnement d'une pile électrochimique.</td>
+					<td class="res stat" id="st-CHI128">doc00140420260904160404_t doc00140520260904160432_t doc00140920260904160757_t doc00141120260904161002_p doc00192620261106160133_p doc00192720261106160213_p doc00193420261106161223_p</td>
+				</tr>
+				<tr id="CHI129">
+					<td class="id">CHI129</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Pile électrochimique.</td>
+					<td class="conn">Identifier, dans une pile électrochimique, la nature des électrodes.</td>
+					<td class="res stat" id="st-CHI129">doc00140420260904160404_t doc00140520260904160432_t doc00140920260904160757_t doc00141120260904161002_p doc00193420261106161223_p</td>
+				</tr>
+				<tr id="CHI130">
+					<td class="id">CHI130</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Pile électrochimique.</td>
+					<td class="conn">Écrire les demi-équations électroniques modélisant les transformations chimiques qui se déroulent à chaque électrode d'une pile électrochimique.</td>
+					<td class="res stat" id="st-CHI130">doc00140320260904160213_p doc00140420260904160404_t doc00140520260904160432_t doc00140920260904160757_t doc00193420261106161223_p doc00193820261106161625_p doc00194920261106162829_p</td>
+				</tr>
+				<tr id="CHI131">
+					<td class="id">CHI131</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Pile électrochimique.</td>
+					<td class="conn">Réaliser une pile électrochimique.</td>
+					<td class="res stat" id="st-CHI131">doc00140420260904160404_t doc00140520260904160432_t doc00140920260904160757_t doc00194920261106162829_t</td>
+				</tr>
+				<tr id="CHI132">
+					<td class="id">CHI132</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Corrosion des métaux.</td>
+					<td class="conn">Extraire et exploiter des informations sur la corrosion des métaux.</td>
+					<td class="res stat" id="st-CHI132">doc00140320260904160213_t doc00193820261106161625_t doc00194920261106162829_p</td>
+				</tr>
+				<tr id="CHI133">
+					<td class="id">CHI133</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Corrosion des métaux.</td>
+					<td class="conn">Citer des facteurs aggravants de la corrosion.</td>
+					<td class="res stat" id="st-CHI133">doc00140320260904160213_t doc00193820261106161625_t doc00194920261106162829_p</td>
+				</tr>
+				<tr id="CHI134">
+					<td class="id">CHI134</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Corrosion des métaux.</td>
+					<td class="conn">Mettre en évidence les facteurs favorisant la corrosion d'un métal.</td>
+					<td class="res stat" id="st-CHI134">doc00140320260904160213_p doc00193820261106161625_t</td>
+				</tr>
+				<tr id="CHI135">
+					<td class="id">CHI135</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Pile de corrosion.</td>
+					<td class="conn">Interpréter l'évolution d'un système constituant une pile de corrosion dans des situations simples.</td>
+					<td class="res stat" id="st-CHI135">doc00140320260904160213_t doc00193820261106161625_t doc00194920261106162829_t</td>
+				</tr>
+				<tr id="CHI136">
+					<td class="id">CHI136</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Protection des métaux contre la corrosion.</td>
+					<td class="conn">Extraire et exploiter des informations sur les méthodes de protection utilisées dans le domaine professionnel (peinture, zingage, chromage, anodisation, anode sacrificielle, protection cathodique, etc.).</td>
+					<td class="res stat" id="st-CHI136">doc00140320260904160213_t doc00140520260904160432_t doc00193820261106161625_t doc00194920261106162829_t</td>
+				</tr>
+				<tr id="CHI137">
+					<td class="id">CHI137</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Protection des métaux contre la corrosion.</td>
+					<td class="conn">Mettre en œuvre différents modes de protection d'un métal contre la corrosion.</td>
+					<td class="res stat" id="st-CHI137">doc00140320260904160213_t doc00193820261106161625_t doc00194920261106162829_t</td>
+				</tr>
+				<tr id="CHI138">
+					<td class="id">CHI138</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Chaux, ciments, bétons.</td>
+					<td class="conn">Écrire et exploiter les équations de réactions de la chaux, les différentes étapes étant décrites (calcination, extinction, carbonatation).</td>
+					<td class="res stat" id="st-CHI138"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI139">
+					<td class="id">CHI139</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Chaux, ciments, bétons.</td>
+					<td class="conn">Nommer l'effet thermique associé à l'extinction de la chaux.</td>
+					<td class="res stat" id="st-CHI139"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI140">
+					<td class="id">CHI140</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Chaux, ciments, bétons.</td>
+					<td class="conn">Citer des facteurs cinétiques influençant la prise d'un ciment ou d'un béton.</td>
+					<td class="res stat" id="st-CHI140"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI141">
+					<td class="id">CHI141</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Chaux, ciments, bétons.</td>
+					<td class="conn">Extraire et exploiter des informations sur la production des ciments et bétons bas carbone.</td>
+					<td class="res stat" id="st-CHI141"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI142">
+					<td class="id">CHI142</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Transformation chimique de la matière</td>
+					<td class="cap">Chaux, ciments, bétons.</td>
+					<td class="conn">Mettre en œuvre un protocole expérimental permettant d'étudier l'influence de différents facteurs sur la dégradation de l'acier d'un béton armé.</td>
+					<td class="res stat" id="st-CHI142"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI95">
+					<td class="id">CHI95</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Matériaux organiques</td>
+					<td class="cap">Les dérivés du pétrole.</td>
+					<td class="conn">Extraire et exploiter des ressources documentaires pour analyser une méthode d'obtention des dérivés du pétrole.</td>
+					<td class="res stat" id="st-CHI95"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI96">
+					<td class="id">CHI96</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Matériaux organiques</td>
+					<td class="cap">Bitumes : extraction, distillation fractionnée.</td>
+					<td class="conn">Exploiter des données physico-chimiques pour expliquer la distillation fractionnée.</td>
+					<td class="res stat" id="st-CHI96"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI97">
+					<td class="id">CHI97</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Matériaux organiques</td>
+					<td class="cap">Différentes représentations des molécules organiques.</td>
+					<td class="conn">Écrire la formule brute, développée et semi-développée d'une molécule à partir de son nom et inversement.</td>
+					<td class="res stat" id="st-CHI97"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI98">
+					<td class="id">CHI98</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Matériaux organiques</td>
+					<td class="cap">Groupes caractéristiques et familles fonctionnelles.</td>
+					<td class="conn">Identifier dans une structure moléculaire donnée les groupes caractéristiques associés aux familles fonctionnelles des alcènes, alcools, acides carboxyliques, aldéhydes, cétones, esters, amines, amides.</td>
+					<td class="res stat" id="st-CHI98"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI99">
+					<td class="id">CHI99</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Matériaux organiques</td>
+					<td class="cap">Polymères : Généralités et classification.</td>
+					<td class="conn">Extraire et exploiter des informations sur les principaux matériaux polymères utilisés dans la vie quotidienne, leurs modes de production, leurs domaines d'applications, ainsi que sur les avantages et inconvénients de l'utilisation de matériaux polymères.</td>
+					<td class="res stat" id="st-CHI99"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI100">
+					<td class="id">CHI100</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Matériaux organiques</td>
+					<td class="cap">Polymères : Généralités et classification.</td>
+					<td class="conn">Définir les polymères thermoplastiques, thermodurcissables et les élastomères.</td>
+					<td class="res stat" id="st-CHI100"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI101">
+					<td class="id">CHI101</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Matériaux organiques</td>
+					<td class="cap">Polymères : Généralités et classification.</td>
+					<td class="conn">Proposer et mettre en œuvre un protocole d'identification du caractère thermoplastique ou thermodurcissable d'un matériau polymère.</td>
+					<td class="res stat" id="st-CHI101"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI102">
+					<td class="id">CHI102</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Matériaux organiques</td>
+					<td class="cap">Polymères : monomère, motif, groupes caractéristiques, réactions de polymérisation (polyaddition, polycondensation).</td>
+					<td class="conn">Définir les termes monomère, polymère, macromolécule.</td>
+					<td class="res stat" id="st-CHI102"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI103">
+					<td class="id">CHI103</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Matériaux organiques</td>
+					<td class="cap">Polymères : monomère, motif, groupes caractéristiques, réactions de polymérisation (polyaddition, polycondensation).</td>
+					<td class="conn">Reconnaître le motif et identifier les groupes caractéristiques dans une macromolécule.</td>
+					<td class="res stat" id="st-CHI103"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI104">
+					<td class="id">CHI104</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Matériaux organiques</td>
+					<td class="cap">Polymères : monomère, motif, groupes caractéristiques, réactions de polymérisation (polyaddition, polycondensation).</td>
+					<td class="conn">Distinguer à l'aide d'exemples les deux grandes catégories de réactions de polymérisation.</td>
+					<td class="res stat" id="st-CHI104"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI105">
+					<td class="id">CHI105</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Matériaux organiques</td>
+					<td class="cap">Polymères : monomère, motif, groupes caractéristiques, réactions de polymérisation (polyaddition, polycondensation).</td>
+					<td class="conn">Écrire l'équation de réaction associée à une polymérisation.</td>
+					<td class="res stat" id="st-CHI105"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI106">
+					<td class="id">CHI106</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Matériaux organiques</td>
+					<td class="cap">Polymères : monomère, motif, groupes caractéristiques, réactions de polymérisation (polyaddition, polycondensation).</td>
+					<td class="conn">Indiquer l'intérêt des produits de synthèse d'une réaction de polymérisation.</td>
+					<td class="res stat" id="st-CHI106"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI107">
+					<td class="id">CHI107</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Matériaux organiques</td>
+					<td class="cap">Polymères : monomère, motif, groupes caractéristiques, réactions de polymérisation (polyaddition, polycondensation).</td>
+					<td class="conn">Mettre en œuvre un protocole mettant en jeu une réaction de polymérisation.</td>
+					<td class="res stat" id="st-CHI107"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI108">
+					<td class="id">CHI108</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Matériaux organiques</td>
+					<td class="cap">Vieillissement d'un matériau polymère.</td>
+					<td class="conn">Citer quelques facteurs agissant sur la dégradation d'un matériau polymère.</td>
+					<td class="res stat" id="st-CHI108"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI143">
+					<td class="id">CHI143</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Traitement de l'eau</td>
+					<td class="cap">Techniques physiques de traitement de l'eau : décantation, filtration.</td>
+					<td class="conn">Extraire et exploiter des informations sur les nécessités du retraitement des eaux.</td>
+					<td class="res stat" id="st-CHI143"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI144">
+					<td class="id">CHI144</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Traitement de l'eau</td>
+					<td class="cap">Techniques physiques de traitement de l'eau : décantation, filtration.</td>
+					<td class="conn">Exploiter des données physiques (solubilité, miscibilité, densité) pour étudier une décantation ou une filtration.</td>
+					<td class="res stat" id="st-CHI144"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI145">
+					<td class="id">CHI145</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Traitement de l'eau</td>
+					<td class="cap">Techniques chimiques de traitement de l'eau : précipitation, neutralisation, réaction d'oxydoréduction.</td>
+					<td class="conn">Écrire l'équation de réaction d'une précipitation.</td>
+					<td class="res stat" id="st-CHI145"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI146">
+					<td class="id">CHI146</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Traitement de l'eau</td>
+					<td class="cap">Techniques chimiques de traitement de l'eau : précipitation, neutralisation, réaction d'oxydoréduction.</td>
+					<td class="conn">Écrire l'équation de réaction entre un acide fort et une base forte dans le cas de la neutralisation d'eaux usées et en déduire la relation entre les quantités de matière.</td>
+					<td class="res stat" id="st-CHI146"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI147">
+					<td class="id">CHI147</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Traitement de l'eau</td>
+					<td class="cap">Techniques chimiques de traitement de l'eau : précipitation, neutralisation, réaction d'oxydoréduction.</td>
+					<td class="conn">Exploiter les relations impliquant le pH, le produit ionique de l'eau, les quantités de matière et les concentrations en quantité de matière.</td>
+					<td class="res stat" id="st-CHI147"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI148">
+					<td class="id">CHI148</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Traitement de l'eau</td>
+					<td class="cap">Techniques chimiques de traitement de l'eau : précipitation, neutralisation, réaction d'oxydoréduction.</td>
+					<td class="conn">Mettre en œuvre expérimentalement des techniques chimiques de traitement de l'eau : précipitation, neutralisation, réaction d'oxydoréduction.</td>
+					<td class="res stat" id="st-CHI148"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI149">
+					<td class="id">CHI149</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Valorisation</td>
+					<td class="cap">Recyclage et retraitement des matériaux polymères et des métaux.</td>
+					<td class="conn">Rechercher, extraire et exploiter des informations relatives au recyclage et au retraitement de matériaux polymères et des métaux utilisés dans le domaine professionnel.</td>
+					<td class="res stat" id="st-CHI149"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI150">
+					<td class="id">CHI150</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Valorisation</td>
+					<td class="cap">Recyclage et retraitement des matériaux polymères et des métaux.</td>
+					<td class="conn">Citer les matières plastiques recyclables les plus courantes.</td>
+					<td class="res stat" id="st-CHI150"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI151">
+					<td class="id">CHI151</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Valorisation</td>
+					<td class="cap">Valorisation énergétique : incinération, méthanisation. Combustions, combustibles, comburants. Combustions complète et incomplète.</td>
+					<td class="conn">Extraire et exploiter des informations relatives à une filière de traitements des déchets.</td>
+					<td class="res stat" id="st-CHI151"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI152">
+					<td class="id">CHI152</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Valorisation</td>
+					<td class="cap">Valorisation énergétique : incinération, méthanisation. Combustions, combustibles, comburants. Combustions complète et incomplète.</td>
+					<td class="conn">Distinguer carburant et comburant.</td>
+					<td class="res stat" id="st-CHI152"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI153">
+					<td class="id">CHI153</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Valorisation</td>
+					<td class="cap">Valorisation énergétique : incinération, méthanisation. Combustions, combustibles, comburants. Combustions complète et incomplète.</td>
+					<td class="conn">Établir et exploiter les équations modélisant les réactions de combustion de carburants (hydrocarbures).</td>
+					<td class="res stat" id="st-CHI153"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI154">
+					<td class="id">CHI154</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Valorisation</td>
+					<td class="cap">Valorisation énergétique : incinération, méthanisation. Combustions, combustibles, comburants. Combustions complète et incomplète.</td>
+					<td class="conn">Mettre en œuvre une démarche expérimentale permettant d'observer que, lors d'une combustion, le système transfère de l'énergie au milieu extérieur sous forme thermique et estimer la valeur de cette énergie libérée.</td>
+					<td class="res stat" id="st-CHI154"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI155">
+					<td class="id">CHI155</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Valorisation</td>
+					<td class="cap">Valorisation énergétique : incinération, méthanisation. Combustions, combustibles, comburants. Combustions complète et incomplète.</td>
+					<td class="conn">Réaliser expérimentalement une réaction de combustion d'un hydrocarbure et identifier les produits de la combustion.</td>
+					<td class="res stat" id="st-CHI155"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI156">
+					<td class="id">CHI156</td>
+					<td class="mod">Matériaux, transformation de la matière, valorisation — Valorisation</td>
+					<td class="cap">Protection contre les risques des combustions.</td>
+					<td class="conn">Extraire et exploiter des informations sur les dangers liés aux combustions et les moyens de prévention et de protection.</td>
+					<td class="res stat" id="st-CHI156"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI159">
+					<td class="id">CHI159</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Classement des bitumes : essai de pénétrabilité et essai de température bille et anneau (TBA).</td>
+					<td class="res stat" id="st-CHI159"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI160">
+					<td class="id">CHI160</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Obtention et propriétés du PVC, lien avec les matériaux de Voiries et Réseaux et Divers (VRD).</td>
+					<td class="res stat" id="st-CHI160"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI161">
+					<td class="id">CHI161</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Fabrication du béton (hydratation du ciment, recyclage des granulats).</td>
+					<td class="res stat" id="st-CHI161"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI162">
+					<td class="id">CHI162</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Mise en œuvre de matériaux composés tels le béton hydraulique et les bétons bitumineux.</td>
+					<td class="res stat" id="st-CHI162"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI163">
+					<td class="id">CHI163</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Durabilité, corrosion et protection des matériaux (armatures en acier du béton armé, etc.).</td>
+					<td class="res stat" id="st-CHI163"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="CHI164">
+					<td class="id">CHI164</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Processus et enjeux du développement durable sur les chantiers.</td>
+					<td class="res stat" id="st-CHI164"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr class="dom">
+					<td colspan="5">📘 Thermique</td>
+				</tr>
+				<tr id="THE47">
+					<td class="id">THE47</td>
+					<td class="mod">Thermique</td>
+					<td class="cap">Propriétés thermoélastiques des matériaux.</td>
+					<td class="conn">Citer différents types de thermomètres et leur principe de fonctionnement.</td>
+					<td class="res stat" id="st-THE47"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="THE48">
+					<td class="id">THE48</td>
+					<td class="mod">Thermique</td>
+					<td class="cap">Propriétés thermoélastiques des matériaux.</td>
+					<td class="conn">Mesurer des températures à l'aide d'un capteur judicieusement choisi.</td>
+					<td class="res stat" id="st-THE48"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="THE49">
+					<td class="id">THE49</td>
+					<td class="mod">Thermique</td>
+					<td class="cap">Propriétés thermoélastiques des matériaux.</td>
+					<td class="conn">Caractériser la dilatation d'un matériau par un coefficient de dilatation linéaire.</td>
+					<td class="res stat" id="st-THE49"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="THE50">
+					<td class="id">THE50</td>
+					<td class="mod">Thermique</td>
+					<td class="cap">Propriétés thermoélastiques des matériaux.</td>
+					<td class="conn">Estimer les valeurs de dilatations linéaire, surfacique ou volumique d'un matériau.</td>
+					<td class="res stat" id="st-THE50"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="THE51">
+					<td class="id">THE51</td>
+					<td class="mod">Thermique</td>
+					<td class="cap">Propriétés thermoélastiques des matériaux.</td>
+					<td class="conn">Déterminer expérimentalement un coefficient de dilatation d'un matériau.</td>
+					<td class="res stat" id="st-THE51"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="THE52">
+					<td class="id">THE52</td>
+					<td class="mod">Thermique</td>
+					<td class="cap">Modes de transfert thermique.</td>
+					<td class="conn">Décrire qualitativement les trois modes de transfert thermique.</td>
+					<td class="res stat" id="st-THE52"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="THE53">
+					<td class="id">THE53</td>
+					<td class="mod">Thermique</td>
+					<td class="cap">Modes de transfert thermique.</td>
+					<td class="conn">Citer des exemples pour chaque mode de transfert thermique.</td>
+					<td class="res stat" id="st-THE53"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="THE54">
+					<td class="id">THE54</td>
+					<td class="mod">Thermique</td>
+					<td class="cap">Flux thermique transféré par conduction en régime permanent. Résistance thermique.</td>
+					<td class="conn">Calculer, dans un cas simple, le flux thermique à travers une paroi constituée d'un matériau homogène, l'expression ou la valeur de la résistance thermique étant donnée.</td>
+					<td class="res stat" id="st-THE54"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="THE55">
+					<td class="id">THE55</td>
+					<td class="mod">Thermique</td>
+					<td class="cap">Flux thermique transféré par conduction en régime permanent. Résistance thermique.</td>
+					<td class="conn">Mesurer la résistance thermique d'une paroi.</td>
+					<td class="res stat" id="st-THE55"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="THE58">
+					<td class="id">THE58</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Mesure sans contact de température.</td>
+					<td class="res stat" id="st-THE58"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="THE59">
+					<td class="id">THE59</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Dilatation des canalisations, rails de chemins de fer, joints de chaussée, tablier de pont, etc.</td>
+					<td class="res stat" id="st-THE59"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="THE60">
+					<td class="id">THE60</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Dilatation par prise exothermique du béton hydraulique en phase de durcissement.</td>
+					<td class="res stat" id="st-THE60"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="THE61">
+					<td class="id">THE61</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Modification des propriétés mécaniques des matériaux avec la température (ramollissement à l'échauffement, raidissement au froid).</td>
+					<td class="res stat" id="st-THE61"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="THE62">
+					<td class="id">THE62</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Protection thermique d'un béton coffré.</td>
+					<td class="res stat" id="st-THE62"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr class="dom">
+					<td colspan="5">📘 Signaux</td>
+				</tr>
+				<tr id="SIG188">
+					<td class="id">SIG188</td>
+					<td class="mod">Vibrations et ondes — Oscillateur mécanique</td>
+					<td class="cap">Réponse d'un oscillateur mécanique à une excitation.</td>
+					<td class="conn">Identifier les sources de vibrations dans le domaine professionnel et les situer sur une échelle de fréquence.</td>
+					<td class="res stat" id="st-SIG188"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG189">
+					<td class="id">SIG189</td>
+					<td class="mod">Vibrations et ondes — Oscillateur mécanique</td>
+					<td class="cap">Réponse d'un oscillateur mécanique à une excitation.</td>
+					<td class="conn">Mettre en œuvre un protocole expérimental pour enregistrer des vibrations d'un système mécanique.</td>
+					<td class="res stat" id="st-SIG189"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG190">
+					<td class="id">SIG190</td>
+					<td class="mod">Vibrations et ondes — Oscillateur mécanique</td>
+					<td class="cap">Oscillations libres ou forcées, amortissement.</td>
+					<td class="conn">Exploiter un enregistrement pour déterminer les caractéristiques d'une oscillation libre ou forcée.</td>
+					<td class="res stat" id="st-SIG190"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG191">
+					<td class="id">SIG191</td>
+					<td class="mod">Vibrations et ondes — Oscillateur mécanique</td>
+					<td class="cap">Oscillations libres ou forcées, amortissement.</td>
+					<td class="conn">Mettre en œuvre un dispositif expérimental visant à étudier l'effet de l'amortissement sur des vibrations mécaniques.</td>
+					<td class="res stat" id="st-SIG191"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG192">
+					<td class="id">SIG192</td>
+					<td class="mod">Vibrations et ondes — Oscillateur mécanique</td>
+					<td class="cap">Oscillations libres ou forcées, amortissement.</td>
+					<td class="conn">Distinguer les oscillations libres des oscillations forcées.</td>
+					<td class="res stat" id="st-SIG192"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG193">
+					<td class="id">SIG193</td>
+					<td class="mod">Vibrations et ondes — Oscillateur mécanique</td>
+					<td class="cap">Oscillations libres ou forcées, amortissement.</td>
+					<td class="conn">Distinguer les régimes pseudopériodique et apériodique.</td>
+					<td class="res stat" id="st-SIG193"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG194">
+					<td class="id">SIG194</td>
+					<td class="mod">Vibrations et ondes — Oscillateur mécanique</td>
+					<td class="cap">Oscillations libres ou forcées, amortissement.</td>
+					<td class="conn">Caractériser une oscillation forcée par sa fréquence et son amplitude.</td>
+					<td class="res stat" id="st-SIG194"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG195">
+					<td class="id">SIG195</td>
+					<td class="mod">Vibrations et ondes — Oscillateur mécanique</td>
+					<td class="cap">Résonance mécanique.</td>
+					<td class="conn">Mettre en œuvre un dispositif expérimental pour déterminer les conditions de la résonance mécanique.</td>
+					<td class="res stat" id="st-SIG195"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG196">
+					<td class="id">SIG196</td>
+					<td class="mod">Vibrations et ondes — Oscillateur mécanique</td>
+					<td class="cap">Résonance mécanique.</td>
+					<td class="conn">Identifier le phénomène de résonance mécanique.</td>
+					<td class="res stat" id="st-SIG196"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG197">
+					<td class="id">SIG197</td>
+					<td class="mod">Vibrations et ondes — Oscillateur mécanique</td>
+					<td class="cap">Résonance mécanique.</td>
+					<td class="conn">Citer quelques applications du phénomène de résonance mécanique dans le cas où elle est recherchée et dans le cas où ses effets sont nuisibles au comportement d'un système.</td>
+					<td class="res stat" id="st-SIG197"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG198">
+					<td class="id">SIG198</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Onde acoustique. Pression acoustique. Célérité.</td>
+					<td class="conn">Décrire le phénomène de propagation d'une onde acoustique à partir des grandeurs vibratoires associées.</td>
+					<td class="res stat" id="st-SIG198">doc00140120260904155850_p doc00140220260904160037_p doc00140620260904160530_p doc00140720260904160636_t doc00194220261106162131_p doc00194420261106162257_p doc00194720261106162509_p doc00194820261106162653_t</td>
+				</tr>
+				<tr id="SIG199">
+					<td class="id">SIG199</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Onde acoustique. Pression acoustique. Célérité.</td>
+					<td class="conn">Citer les paramètres d'influence de la célérité des ondes acoustiques.</td>
+					<td class="res stat" id="st-SIG199">doc00140620260904160530_p doc00140720260904160636_t doc00194220261106162131_p doc00194420261106162257_p doc00194820261106162653_t</td>
+				</tr>
+				<tr id="SIG200">
+					<td class="id">SIG200</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Onde acoustique. Pression acoustique. Célérité.</td>
+					<td class="conn">Citer l'ordre de grandeur de la célérité d'une onde acoustique dans quelques milieux : air, liquide, matériaux du domaine professionnel.</td>
+					<td class="res stat" id="st-SIG200">doc00140620260904160530_p doc00140720260904160636_t doc00140820260904160731_t doc00192720261106160213_p doc00193920261106161934_p doc00194220261106162131_p doc00194420261106162257_p doc00194820261106162653_t</td>
+				</tr>
+				<tr id="SIG201">
+					<td class="id">SIG201</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Son pur. Fréquence, période, amplitude. Longueur d'onde.</td>
+					<td class="conn">Citer le domaine de fréquences des sons audibles et des ultrasons.</td>
+					<td class="res stat" id="st-SIG201">doc00140420260904160404_p doc00140620260904160530_t doc00194020261106162002_p doc00194120261106162030_t doc00194320261106162222_p</td>
+				</tr>
+				<tr id="SIG202">
+					<td class="id">SIG202</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Son pur. Fréquence, période, amplitude. Longueur d'onde.</td>
+					<td class="conn">Écrire et exploiter la relation entre la célérité, la longueur d'onde et la fréquence d'une onde progressive sinusoïdale.</td>
+					<td class="res stat" id="st-SIG202">doc00140420260904160404_p doc00194020261106162002_p doc00194120261106162030_t doc00194320261106162222_p</td>
+				</tr>
+				<tr id="SIG203">
+					<td class="id">SIG203</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Son pur. Fréquence, période, amplitude. Longueur d'onde.</td>
+					<td class="conn">Mettre en œuvre un dispositif expérimental permettant de visualiser le signal de pression acoustique associé à une onde sonore et de mesurer la célérité de l'onde.</td>
+					<td class="res stat" id="st-SIG203">doc00140420260904160404_t doc00140620260904160530_t doc00140720260904160636_t doc00192720261106160213_p doc00194020261106162002_p doc00194120261106162030_p doc00194320261106162222_p</td>
+				</tr>
+				<tr id="SIG204">
+					<td class="id">SIG204</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Son complexe, bruit.</td>
+					<td class="conn">Enregistrer et exploiter le spectre d'une onde sonore.</td>
+					<td class="res stat" id="st-SIG204"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG205">
+					<td class="id">SIG205</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Intensité d'une onde acoustique et niveau sonore.</td>
+					<td class="conn">Exploiter la relation, fournie, entre le niveau sonore et l'intensité d'une onde acoustique.</td>
+					<td class="res stat" id="st-SIG205">doc00140120260904155850_t doc00140220260904160037_t doc00142820260904162814_t doc00192720261106160213_t doc00193920261106161934_p doc00194620261106162422_p doc00194720261106162509_t</td>
+				</tr>
+				<tr id="SIG206">
+					<td class="id">SIG206</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Intensité d'une onde acoustique et niveau sonore.</td>
+					<td class="conn">Déterminer le niveau sonore résultant d'une superposition d'ondes acoustiques incohérentes.</td>
+					<td class="res stat" id="st-SIG206">doc00140120260904155850_t doc00140220260904160037_t doc00194620261106162422_p doc00194720261106162509_t</td>
+				</tr>
+				<tr id="SIG207">
+					<td class="id">SIG207</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Réflexion, transmission, absorption d'une onde acoustique.</td>
+					<td class="conn">Extraire et exploiter des informations sur les phénomènes de réflexion, transmission et absorption des ondes acoustiques.</td>
+					<td class="res stat" id="st-SIG207">doc00140120260904155850_t doc00140220260904160037_t doc00140420260904160404_t doc00194520261106162403_p</td>
+				</tr>
+				<tr id="SIG208">
+					<td class="id">SIG208</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Réflexion, transmission, absorption d'une onde acoustique.</td>
+					<td class="conn">Mettre en évidence expérimentalement les phénomènes de réflexion, de transmission ou d'absorption d'une onde acoustique.</td>
+					<td class="res stat" id="st-SIG208">doc00140420260904160404_t doc00192720261106160213_p</td>
+				</tr>
+				<tr id="SIG209">
+					<td class="id">SIG209</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Perception sonore humaine. Protection acoustique : normes et équipement de protection individuel (EPI).</td>
+					<td class="conn">Citer les deux grandeurs influençant la perception sensorielle : l'intensité et la fréquence d'un son.</td>
+					<td class="res stat" id="st-SIG209">doc00140120260904155850_t doc00140220260904160037_t doc00194520261106162403_p doc00194620261106162422_p doc00194720261106162509_t</td>
+				</tr>
+				<tr id="SIG210">
+					<td class="id">SIG210</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Perception sonore humaine. Protection acoustique : normes et équipement de protection individuel (EPI).</td>
+					<td class="conn">Expliquer l'intérêt de la mesure du niveau sonore en dBA.</td>
+					<td class="res stat" id="st-SIG210">doc00194620261106162422_p</td>
+				</tr>
+				<tr id="SIG211">
+					<td class="id">SIG211</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Perception sonore humaine. Protection acoustique : normes et équipement de protection individuel (EPI).</td>
+					<td class="conn">Utiliser un sonomètre pour mesurer un niveau sonore avec ou sans pondération.</td>
+					<td class="res stat" id="st-SIG211">doc00140120260904155850_p doc00140220260904160037_p doc00140420260904160404_p</td>
+				</tr>
+				<tr id="SIG212">
+					<td class="id">SIG212</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Perception sonore humaine. Protection acoustique : normes et équipement de protection individuel (EPI).</td>
+					<td class="conn">Situer, sur une échelle de niveaux sonores, des sons caractéristiques (vie courante et domaine professionnel) ainsi que les seuils d'audibilité et de douleur.</td>
+					<td class="res stat" id="st-SIG212">doc00140120260904155850_t doc00140220260904160037_t doc00194720261106162509_t</td>
+				</tr>
+				<tr id="SIG213">
+					<td class="id">SIG213</td>
+					<td class="mod">Vibrations et ondes — Ondes acoustiques</td>
+					<td class="cap">Perception sonore humaine. Protection acoustique : normes et équipement de protection individuel (EPI).</td>
+					<td class="conn">Exploiter les normes relatives aux nuisances sonores pour choisir une protection adaptée.</td>
+					<td class="res stat" id="st-SIG213">doc00140120260904155850_p doc00140220260904160037_p doc00194520261106162403_p doc00194720261106162509_p</td>
+				</tr>
+				<tr id="SIG214">
+					<td class="id">SIG214</td>
+					<td class="mod">Vibrations et ondes — Ondes lumineuses</td>
+					<td class="cap">Sources lumineuses.</td>
+					<td class="conn">Caractériser différentes sources lumineuses à l'aide de leur spectre : laser, LED, lampe à incandescence, lampe spectrale, etc. Associer qualitativement les longueurs d'onde dans le vide aux couleurs dans le cas du spectre visible.</td>
+					<td class="res stat" id="st-SIG214"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG215">
+					<td class="id">SIG215</td>
+					<td class="mod">Vibrations et ondes — Ondes lumineuses</td>
+					<td class="cap">Sources lumineuses.</td>
+					<td class="conn">Expliquer les notions de température de couleur et d'indice de rendu des couleurs (IRC).</td>
+					<td class="res stat" id="st-SIG215"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG216">
+					<td class="id">SIG216</td>
+					<td class="mod">Vibrations et ondes — Ondes lumineuses</td>
+					<td class="cap">Sources lumineuses.</td>
+					<td class="conn">Obtenir expérimentalement et comparer les spectres de différentes sources lumineuses.</td>
+					<td class="res stat" id="st-SIG216"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG217">
+					<td class="id">SIG217</td>
+					<td class="mod">Vibrations et ondes — Ondes lumineuses</td>
+					<td class="cap">Photométrie.</td>
+					<td class="conn">Exprimer pour chaque type de source, les grandeurs photométriques : flux lumineux, intensité lumineuse et éclairement lumineux.</td>
+					<td class="res stat" id="st-SIG217"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG218">
+					<td class="id">SIG218</td>
+					<td class="mod">Vibrations et ondes — Ondes lumineuses</td>
+					<td class="cap">Photométrie.</td>
+					<td class="conn">Mettre en œuvre un protocole expérimental permettant de déterminer l'éclairement en fonction de la distance à la source.</td>
+					<td class="res stat" id="st-SIG218"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG219">
+					<td class="id">SIG219</td>
+					<td class="mod">Vibrations et ondes — Ondes lumineuses</td>
+					<td class="cap">Photométrie.</td>
+					<td class="conn">Définir et exploiter l'efficacité lumineuse d'une source.</td>
+					<td class="res stat" id="st-SIG219"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG220">
+					<td class="id">SIG220</td>
+					<td class="mod">Vibrations et ondes — Ondes lumineuses</td>
+					<td class="cap">Photométrie.</td>
+					<td class="conn">Caractériser l'œil en tant que récepteur sélectif de lumière.</td>
+					<td class="res stat" id="st-SIG220"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG221">
+					<td class="id">SIG221</td>
+					<td class="mod">Vibrations et ondes — Ondes lumineuses</td>
+					<td class="cap">Photométrie.</td>
+					<td class="conn">Choisir un mode d'éclairage adapté en fonction de ses caractéristiques.</td>
+					<td class="res stat" id="st-SIG221"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG222">
+					<td class="id">SIG222</td>
+					<td class="mod">Vibrations et ondes — Ondes lumineuses</td>
+					<td class="cap">Transmission et absorption de la lumière par un matériau. Filtres.</td>
+					<td class="conn">Analyser expérimentalement l'effet d'un filtre sur le spectre d'une source lumineuse.</td>
+					<td class="res stat" id="st-SIG222"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG224">
+					<td class="id">SIG224</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Vibrations sur les chantiers et les ouvrages (consolidation des sols par compactage, amortisseurs, etc.).</td>
+					<td class="res stat" id="st-SIG224"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG225">
+					<td class="id">SIG225</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Transmission et absorption des ondes dans les milieux solides (détection des réseaux, des armatures, auscultation sonique, enrobés acoustiques, mesure de profondeur, géo-radars, etc.).</td>
+					<td class="res stat" id="st-SIG225"><span class="empty">à traiter</span></td>
+				</tr>
+				<tr id="SIG226">
+					<td class="id">SIG226</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Risques et nuisances sonores des chantiers (protections individuelles), protections acoustiques extérieures (murs anti-bruit).</td>
+					<td class="res stat" id="st-SIG226">doc00140120260904155850_p doc00140220260904160037_p doc00140420260904160404_p doc00194720261106162509_p</td>
+				</tr>
+				<tr id="SIG227">
+					<td class="id">SIG227</td>
+					<td class="mod">Applications métiers dans le domaine des travaux publics</td>
+					<td class="cap"><span class="empty">—</span></td>
+					<td class="conn">Éclairage public urbain, des chantiers, routes et équipements.</td>
+					<td class="res stat" id="st-SIG227"><span class="empty">à traiter</span></td>
+				</tr></tbody>
+		</table>
+	</div>
+	<div class="legend">Statut : <fichier>_t = chapitre vu en totalité dans ce fichier · <fichier>_p = vue partielle de la capacité · à traiter = non couvert l'an dernier. Tableau allégé (5 colonnes) — les ressources complètes restent dans les tableaux référentiel et progression.</fichier></fichier></div>
+	<div class="legend" id="horsprog"><b>⚠️ Vu en cours mais hors référentiel BTS TP</b> (aucune ligne du tableau ne correspond — niveau Bac pro ou hors programme) :
+① <b>Production et transport de l'électricité</b> : alternateur, réseau 400 000 V interconnecté, réseaux régionaux 225/90/63 kV, postes sources (20 000 V → 400/230 V), transformateur (U₁·I₁ = U₂·I₂), pertes en ligne par effet Joule (P<sub>Joule</sub> = R·I²) — activité 3 élec « Transport de l'électricité et sécurité » (doc001924) et points 8-9 du bilan CH 3 (doc001412/923). Ce contenu relève du Bac pro (transport et distribution de l'énergie), pas des 193 lignes BTS TP.
+② <b>Isolation phonique</b> : loi de masse, loi masse-ressort-masse, loi d'étanchéité (poste 1 des révisions CCF, doc001927) — en marge des lignes SIG207-208 (réflexion/transmission/absorption), mais ces trois lois ne figurent pas comme capacités du référentiel.
+③ <b>Rendement d'un convertisseur</b> (ex. « pile de rendement 90 % → P = U·I·F », exo 4 des révisions CCF) — le facteur de puissance K est au programme (ELE68), le rendement ne dispose d'aucune ligne dédiée.</div>
+<script>
+
+// Statut par ligne BTS TP — rempli d'après les cours de l'année précédente.
+// Convention : « <nom de fichier>_t » = capacité/chapitre traité en TOTALITÉ dans ce fichier ;
+// « <nom de fichier>_p » = vue PARTIELLE (abordée, à reprendre) ; absent = à traiter.
+// Plusieurs fichiers possibles, séparés par une espace : "cours1_t cours2_p".
+
+function init()
+	{
+		const btn = document.getElementById("themeBtn");
+		let dark = false;
+		try { 
+				dark = localStorage.getItem("pc-theme") === "dark"; 
+			} catch(e){}
+			
+		const apply = () => {
+			document.body.classList.toggle("dark", dark);
+			btn.textContent = dark ? "☀️" : "🌙";
+			try { 
+					localStorage.setItem("pc-theme", dark ? "dark" : "light"); 
+				} catch(e){}
+			};
+			
+		btn.onclick = () => { 
+			dark = !dark; 
+			apply(); 
+			};
+		apply();
+	}
+</script>
+
+</body>
+</html>

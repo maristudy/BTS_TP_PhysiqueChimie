@@ -89,7 +89,6 @@
 			let Tinit2 = Math.floor(Math.random()*40)-20;
 			let deltaT2 = Math.floor(Math.random()*60)+40;
 			let Tfin2 = Tinit2 + deltaT2
-			let Lfin2 = Linit2 * ((coef2*(1/1000000)*deltaT2)+1)
 
 			while(Linit1 == Linit2)
 			{
@@ -117,12 +116,14 @@
 				Tfin2 = Tinit2 + deltaT2
 			}			
 			
+			
+			let Lfin2 = Linit2 * ((coef2*(1/1000000)*deltaT2)+1)
+			
 			let Linit3 = (Math.floor(Math.random()*20)+1)*2;
 			let coef3 = (Math.floor(Math.random()*30))+1;
 			let Tinit3 = Math.floor(Math.random()*40)-20;
 			let deltaT3 = Math.floor(Math.random()*60)+40;
 			let Tfin3 = Tinit3 + deltaT3
-			let Lfin3 = Linit3 * ((coef3*(1/1000000)*deltaT3)+1)			
 			
 			while( (Linit1 == Linit3) || (Linit3 == Linit2) )
 			{
@@ -149,6 +150,9 @@
 				deltaT3 = Math.floor(Math.random()*60)+40;
 				Tfin3 = Tinit3 + deltaT3
 			}				
+
+			
+			let Lfin3 = Linit3 * ((coef3*(1/1000000)*deltaT3)+1)	
 			
 			let espace ="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 			
@@ -166,7 +170,7 @@
 			let Q3 = "Q3 : Vous savez que : L<sub>initiale</sub> = "+Linit3+" mètres"+espace+"L<sub>finale</sub> = "+Lfin3+" mètres <br>"+
 			" coeficient dilatation linéaire = "+coef3+" x 10<sup>-6</sup> °C<sup>-1</sup>"+espace+"température initiale = "+Tinit3+" °C"+"<br>(/0.5) Quelle formule vous permet de calculer ΔT ?<br><br><br>"+
 			"(/0.5) Calculez T<sub>final</sub> : <br><br><br>(/0.5) phrase réponse :";
-			let R3 = "<br>R3 : (/0.5) on modifie la formule ΔL = α x L<sub>initiale</sub> x ΔT => ΔT = (ΔL)/(L<sub>initiale</sub> x α)<br><br>(/0.5) ΔT = ("+Lfin3+" - "+Linit3+" ) / ( "+Linit3+" x "+coef3+" x 10 <sup>-6</sup> => ΔT = "+(Tfin3-Tinit3)+" => T<sub>finale</sub> = "+Tfin3+" °C<br><br>"+
+			let R3 = "<br>R3 : (/0.5) on modifie la formule ΔL = α x L<sub>initiale</sub> x ΔT => ΔT = (ΔL)/(L<sub>initiale</sub> x α)<br><br>(/0.5) ΔT = ("+Lfin3+" - "+Linit3+" ) / ( "+Linit3+" x "+coef3+" x 10 <sup>-6</sup>) => ΔT = "+(Tfin3-Tinit3)+" => T<sub>finale</sub> = "+Tfin3+" °C<br><br>"+
 			"(/0.5) La température finale est de "+Tfin3+" °C<br>";
 			
 			enonce = document.getElementsByClassName("enonce")[0];
